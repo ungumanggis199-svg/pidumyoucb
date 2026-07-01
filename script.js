@@ -425,8 +425,82 @@ async function loadJaksaList() {
       const password = this.password.value.trim();
 
       // Demo login validation (replace with server-side validation)
-      const DEMO_USER = "jaksa";
-      const DEMO_PASS = "muna2026";
+const loginForm = document.getElementById("loginForm");
+
+if (loginForm) {
+  loginForm.addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const username = this.username.value.trim();
+    const password = this.password.value.trim();
+    const submitBtn = this.querySelector(".btn-submit");
+
+    if (!username || !password) {
+      alert("Nomor NIP dan password wajib diisi.");
+      return;
+    }
+
+    try {
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Memeriksa...";
+      }
+
+      const clientToken =
+        "LOGIN-" + Date.now() + "-" + Math.random().toString(36).slice(2);
+
+      await fetch(GOOGLE_SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8"
+        },
+        body: JSON.stringify({
+          action: "validate_login",
+          username: username,
+          password: password,
+          client_token: clientToken
+        })
+      });
+
+      const result = await sikordaWaitResult("login_result", clientToken);
+
+      if (result.status === "success") {
+        sessionStorage.setItem("isJaksaLoggedIn", "true");
+        sessionStorage.setItem("jaksaName", result.nama_jaksa || username);
+        sessionStorage.setItem("jaksaUsername", username);
+        sessionStorage.setItem("jaksaSessionToken", result.session_token);
+
+        alert("Login berhasil. Selamat datang, " + (result.nama_jaksa || "Jaksa") + ".");
+
+        closeLogin();
+        unlockJaksaData();
+        updateLoginButton();
+
+        if (typeof applyNamePrivacy === "function") {
+          applyNamePrivacy();
+        }
+
+        if (typeof renderMonitoringTable === "function") {
+          renderMonitoringTable();
+        }
+
+      } else {
+        alert(result.message || "Nomor NIP atau password salah.");
+      }
+
+    } catch (error) {
+      console.error(error);
+      alert("Login gagal. Silakan coba lagi.");
+
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Masuk";
+      }
+    }
+  });
+}
 
       if (username === DEMO_USER && password === DEMO_PASS) {
         sessionStorage.setItem("isJaksaLoggedIn", "true");
@@ -566,4 +640,69 @@ if (formPermohonan) {
     });
   }
 });
+function sikordaJsonpRequest(url, timeout = 15000) {
+  return new Promise((resolve, reject) => {
+    const callbackName =
+      "sikordaCallback_" + Date.now() + "_" + Math.random().toString(36).slice(2);
 
+    const script = document.createElement("script");
+
+    const timer = setTimeout(() => {
+      cleanup();
+      reject(new Error("Timeout mengambil data."));
+    }, timeout);
+
+    function cleanup() {
+      clearTimeout(timer);
+
+      if (script.parentNode) {
+        script.parentNode.removeChild(script);
+      }
+
+      delete window[callbackName];
+    }
+
+    window[callbackName] = function (data) {
+      cleanup();
+      resolve(data);
+    };
+
+    const separator = url.includes("?") ? "&" : "?";
+    script.src = url + separator + "callback=" + encodeURIComponent(callbackName);
+
+    script.onerror = function () {
+      cleanup();
+      reject(new Error("Gagal mengambil data."));
+    };
+
+    document.body.appendChild(script);
+  });
+}
+
+function sikordaDelay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function sikordaWaitResult(action, clientToken) {
+  for (let i = 0; i < 8; i++) {
+    await sikordaDelay(i === 0 ? 500 : 1000);
+
+    const url =
+      GOOGLE_SCRIPT_URL +
+      "?action=" +
+      encodeURIComponent(action) +
+      "&client_token=" +
+      encodeURIComponent(clientToken);
+
+    const result = await sikordaJsonpRequest(url);
+
+    if (result.status === "success" || result.status === "error") {
+      return result;
+    }
+  }
+
+  return {
+    status: "pending",
+    message: "Data masih diproses."
+  };
+}
