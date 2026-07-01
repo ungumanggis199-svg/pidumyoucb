@@ -333,3 +333,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   console.log("SIKORDA - Kejaksaan Negeri Muna berhasil dimuat.");
 });
+/* ============================================================
+   NAVIGASI ANTAR HALAMAN
+   ============================================================ */
+function goToPermohonan() {
+  window.location.href = "permohonan.html";
+}
+function goToMonitoring() {
+  window.location.href = "monitoring.html";
+}
+
