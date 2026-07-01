@@ -21,8 +21,17 @@ html { scroll-behavior: smooth; }
   box-shadow: 0 2px 15px rgba(123,17,19,0.12);
   backdrop-filter: blur(8px);
 }
-.nav-brand { display: flex; align-items: center; gap: 14px; }
-.logo { height: 52px; }
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  overflow: visible;   /* penting! */
+}
+.logo {
+  height: 52px;
+  width: auto;
+  object-fit: contain;   /* pastikan gambar tampil utuh */
+  display: block;}
 .brand-text h1 { color: var(--maroon); font-size: 1.4rem; letter-spacing: 1px; }
 .brand-text span { font-size: 0.72rem; color: var(--gold); font-weight: 500; }
 .nav-links { display: flex; align-items: center; gap: 26px; }
@@ -48,7 +57,13 @@ html { scroll-behavior: smooth; }
   overflow: hidden;
 }
 .hero-content { z-index: 2; max-width: 720px; padding: 40px 20px; animation: fadeUp 1s ease; }
-.hero-logo { height: 110px; margin-bottom: 20px; animation: float 4s ease-in-out infinite; }
+.hero-logo {
+  height: 120px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto 20px auto;}
+  animation: float 4s ease-in-out infinite;
 .hero-content h2 { font-size: 2.6rem; color: var(--maroon); font-weight: 700; }
 .hero-content h3 { font-size: 1.3rem; color: var(--gold); margin-bottom: 18px; }
 .hero-content p { color: #555; font-size: 1.05rem; line-height: 1.7; margin-bottom: 30px; }
