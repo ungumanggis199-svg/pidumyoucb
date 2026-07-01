@@ -634,3 +634,33 @@ textarea[name="kronologi"] {
     max-width: 220px;
   }
 }
+body {
+  min-height: 100vh;
+  background:
+    linear-gradient(rgba(15, 15, 18, 0.78), rgba(15, 15, 18, 0.86)),
+    url("../Background Gedung kn Muna.png") center/cover fixed no-repeat;
+  overflow-x: hidden;
+}
+
+#particles-js {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.navbar,
+.form-page,
+.form-box,
+footer {
+  position: relative;
+  z-index: 1;
+}
+
+.form-box {
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(6px);
+  border-radius: 18px;
+}
