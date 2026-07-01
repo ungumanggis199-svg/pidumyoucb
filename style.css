@@ -197,4 +197,13 @@ html { scroll-behavior: smooth; }
 /* Pastikan konten & garis emas di atas ornamen */
 .hero-content { position: relative; z-index: 3; }
 .hero::after { z-index: 4; }
+/* Hormati pengguna yang meminta pengurangan gerak */
+@media (prefers-reduced-motion: reduce) {
+  .hero-bg, .orb { animation: none !important; }
+}
+
+/* Kurangi jumlah orb di layar kecil agar tetap ringan */
+@media (max-width: 600px) {
+  .orb-3, .orb-4 { display: none; }
+}
 
