@@ -291,3 +291,37 @@ legend {
     padding: 14px;
   }
 }
+textarea[name="kronologi"] {
+  min-height: 180px;
+  font-size: 1.1rem;
+  padding: 12px 15px;
+  border-radius: 8px;
+  border: 1.5px solid var(--gold);
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.input-group input[type="text"]:focus,
+.input-group input[type="tel"]:focus,
+.input-group textarea:focus {
+  outline: none;
+  border-color: var(--maroon);
+  box-shadow: 0 0 8px rgba(123, 17, 19, 0.5);
+  background-color: #fff;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #a89f6a;
+  opacity: 1;
+}
+
+.input-group label {
+  color: #5a0c0e;
+  font-weight: 600;
+}
+
+.input-group input,
+.input-group textarea {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
