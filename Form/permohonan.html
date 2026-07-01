@@ -1,1 +1,184 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Permohonan Koordinasi - SIKORDA</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="nav-brand">
+      <img src="https://raw.githubusercontent.com/ungumanggis199-svg/MBG-Muna/main/Logo-Kejaksaan%20(1)(1).png" alt="Logo" class="logo">
+      <div class="brand-text"><h1>SIKORDA</h1><span>Sistem Koordinasi Penyidik &amp; Jaksa</span></div>
+    </div>
+    <nav class="nav-links">
+      <a href="index.html">Beranda</a>
+      <a href="permohonan.html" class="active">Permohonan Koordinasi</a>
+      <a href="monitoring.html">Monitoring</a>
+      <button class="btn-login" onclick="openLogin()">Login Jaksa</button>
+    </nav>
+    <div class="burger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+  </header>
 
+  <!-- FORM PERMOHONAN -->
+  <section id="permohonan" class="section">
+    <div class="section-header">
+      <h2>Formulir Permohonan Koordinasi</h2>
+      <div class="divider"></div>
+    </div>
+
+    <form id="formPermohonan" class="form-box">
+      <!-- A. Identitas Perkara -->
+      <fieldset>
+        <legend>A. Identitas Perkara</legend>
+        <div class="grid-2">
+          <div class="input-group">
+            <label>Nomor Laporan Polisi</label>
+            <input type="text" name="nomor_lp" placeholder="Masukkan Nomor LP">
+          </div>
+          <div class="input-group">
+            <label>Nomor SPDP</label>
+            <input type="text" name="nomor_spdp" placeholder="Masukkan Nomor SPDP">
+          </div>
+          <div class="input-group">
+            <label>Nama Tersangka</label>
+            <input type="text" name="nama_tersangka" placeholder="Nama Tersangka">
+          </div>
+          <div class="input-group">
+            <label>Pasal yang Disangkakan</label>
+            <input type="text" name="pasal" placeholder="Contoh: Pasal 263 KUHP">
+          </div>
+          <div class="input-group">
+            <label>Jaksa Peneliti</label>
+            <input type="text" name="jaksa_peneliti" placeholder="Nama Jaksa Peneliti">
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- B. Jenis Koordinasi -->
+      <fieldset>
+        <legend>B. Jenis Koordinasi (pilih salah satu)</legend>
+        <div class="checklist">
+          <label><input type="radio" name="jenis_koordinasi" value="Konsultasi sebelum pengiriman berkas"> Konsultasi sebelum pengiriman berkas</label>
+          <label><input type="radio" name="jenis_koordinasi" value="Konsultasi sebelum gelar perkara"> Konsultasi sebelum gelar perkara</label>
+          <label><input type="radio" name="jenis_koordinasi" value="Konsultasi pemenuhan P-19"> Konsultasi pemenuhan P-19</label>
+          <label><input type="radio" name="jenis_koordinasi" value="Konsultasi penambahan pasal"> Konsultasi penambahan pasal</label>
+          <label><input type="radio" name="jenis_koordinasi" value="Konsultasi alat bukti"> Konsultasi alat bukti</label>
+          <label><input type="radio" name="jenis_koordinasi" value="Konsultasi saksi"> Konsultasi saksi</label>
+          <label><input type="radio" name="jenis_koordinasi" value="Konsultasi ahli"> Konsultasi ahli</label>
+          <label><input type="radio" name="jenis_koordinasi" value="Konsultasi penyitaan"> Konsultasi penyitaan</label>
+          <label><input type="radio" name="jenis_koordinasi" value="Konsultasi penahanan"> Konsultasi penahanan</label>
+          <label><input type="radio" name="jenis_koordinasi" value="Konsultasi RJ"> Konsultasi RJ</label>
+          <label><input type="radio" name="jenis_koordinasi" value="Konsultasi lainnya"> Konsultasi lainnya</label>
+        </div>
+      </fieldset>
+
+      <!-- C. Tingkat Urgensi -->
+      <fieldset>
+        <legend>C. Tingkat Urgensi</legend>
+        <div class="checklist urgensi">
+          <label><input type="radio" name="urgensi" value="Sangat Mendesak"> Sangat Mendesak (hari ini)</label>
+          <label><input type="radio" name="urgensi" value="Mendesak"> Mendesak (1 hari)</label>
+          <label><input type="radio" name="urgensi" value="Normal"> Normal (3 hari)</label>
+          <label><input type="radio" name="urgensi" value="Tidak Mendesak"> Tidak Mendesak</label>
+        </div>
+      </fieldset>
+
+      <!-- D. Permasalahan -->
+      <fieldset>
+        <legend>D. Permasalahan yang Dikonsultasikan</legend>
+        <div id="permasalahanWrap">
+          <div class="poin-row">
+            <input type="text" name="permasalahan[]" placeholder="1. Tuliskan permasalahan...">
+            <button type="button" class="btn-remove" onclick="removePoin(this)">&times;</button>
+          </div>
+        </div>
+        <button type="button" class="btn-add" onclick="addPoin()">+ Tambah Poin</button>
+      </fieldset>
+
+      <!-- E. Kronologi -->
+      <fieldset>
+        <legend>E. Kronologi Singkat</legend>
+        <textarea name="kronologi" rows="5" placeholder="Uraikan kronologi singkat perkara..."></textarea>
+      </fieldset>
+
+      <!-- F. Yang Sudah Dilakukan Penyidik -->
+      <fieldset>
+        <legend>F. Yang Sudah Dilakukan Penyidik</legend>
+        <div class="checklist grid-3">
+          <label><input type="checkbox" name="sudah_dilakukan[]" value="Pemeriksaan saksi"> Pemeriksaan saksi</label>
+          <label><input type="checkbox" name="sudah_dilakukan[]" value="Pemeriksaan ahli"> Pemeriksaan ahli</label>
+          <label><input type="checkbox" name="sudah_dilakukan[]" value="Penyitaan"> Penyitaan</label>
+          <label><input type="checkbox" name="sudah_dilakukan[]" value="Penggeledahan"> Penggeledahan</label>
+          <label><input type="checkbox" name="sudah_dilakukan[]" value="Pemeriksaan tersangka"> Pemeriksaan tersangka</label>
+          <label><input type="checkbox" name="sudah_dilakukan[]" value="Rekonstruksi"> Rekonstruksi</label>
+          <label><input type="checkbox" name="sudah_dilakukan[]" value="Audit"> Audit</label>
+          <label><input type="checkbox" name="sudah_dilakukan[]" value="Lainnya"> Lainnya</label>
+        </div>
+      </fieldset>
+
+      <!-- G. Yang Dimohon -->
+      <fieldset>
+        <legend>G. Yang Dimohon kepada Jaksa</legend>
+        <div class="checklist grid-3">
+          <label><input type="checkbox" name="dimohon[]" value="Pendapat hukum"> Pendapat hukum</label>
+          <label><input type="checkbox" name="dimohon[]" value="Arahan kelengkapan formil"> Arahan kelengkapan formil</label>
+          <label><input type="checkbox" name="dimohon[]" value="Arahan kelengkapan materiil"> Arahan kelengkapan materiil</label>
+          <label><input type="checkbox" name="dimohon[]" value="Pendapat penerapan pasal"> Pendapat penerapan pasal</label>
+          <label><input type="checkbox" name="dimohon[]" value="Pendapat alat bukti"> Pendapat alat bukti</label>
+          <label><input type="checkbox" name="dimohon[]" value="Pendapat penyitaan"> Pendapat penyitaan</label>
+          <label><input type="checkbox" name="dimohon[]" value="Pendapat penahanan"> Pendapat penahanan</label>
+          <label><input type="checkbox" name="dimohon[]" value="Pendapat RJ"> Pendapat RJ</label>
+          <label><input type="checkbox" name="dimohon[]" value="Lainnya"> Lainnya</label>
+        </div>
+      </fieldset>
+
+      <!-- H. Dokumen Pendukung -->
+      <fieldset>
+        <legend>H. Dokumen Pendukung</legend>
+        <div class="checklist grid-3">
+          <label><input type="checkbox" name="dokumen[]" value="LP"> LP</label>
+          <label><input type="checkbox" name="dokumen[]" value="SPDP"> SPDP</label>
+          <label><input type="checkbox" name="dokumen[]" value="Resume perkara"> Resume perkara</label>
+          <label><input type="checkbox" name="dokumen[]" value="BAP"> BAP</label>
+          <label><input type="checkbox" name="dokumen[]" value="P-19"> P-19</label>
+          <label><input type="checkbox" name="dokumen[]" value="Foto Barang Bukti"> Foto Barang Bukti</label>
+          <label><input type="checkbox" name="dokumen[]" value="Dokumen lain"> Dokumen lain</label>
+        </div>
+        <div class="upload-box">
+          <label>Upload File (maksimal 10MB)</label>
+          <input type="file" id="fileUpload" onchange="checkFileSize(this)">
+          <small>Format: PDF, JPG, PNG, DOCX</small>
+        </div>
+      </fieldset>
+
+      <!-- I. Cara Koordinasi -->
+      <fieldset>
+        <legend>I. Cara Koordinasi yang Diinginkan</legend>
+        <div class="checklist">
+          <label><input type="radio" name="cara_koordinasi" value="Balasan melalui sistem"> Balasan melalui sistem</label>
+          <label><input type="radio" name="cara_koordinasi" value="Telepon"> Telepon</label>
+          <label><input type="radio" name="cara_koordinasi" value="Video Conference"> Video Conference</label>
+          <label><input type="radio" name="cara_koordinasi" value="Tatap muka apabila diperlukan"> Tatap muka apabila diperlukan</label>
+        </div>
+      </fieldset>
+
+      <!-- J. Nomor HP -->
+      <fieldset>
+        <legend>J. Kontak Penyidik</legend>
+        <div class="input-group">
+          <label>Nomor HP Penyidik</label>
+          <input type="tel" name="nomor_hp" placeholder="Contoh: 0812xxxxxxx">
+        </div>
+      </fieldset>
+
+      <button type="submit" class="btn-submit">Kirim Permohonan</button>
+    </form>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
