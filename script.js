@@ -342,4 +342,9 @@ function goToPermohonan() {
 function goToMonitoring() {
   window.location.href = "monitoring.html";
 }
-
+document.addEventListener("click", function (e) {
+  const modal = document.getElementById("loginModal");
+  if (e.target === modal) {
+    modal.classList.remove("show");
+  }
+});
