@@ -1,37 +1,128 @@
-/* ===== FORM STYLE KHUSUS ===== */
-
 :root {
   --maroon: #7b1113;
+  --maroon-dark: #5a0c0e;
   --gold: #c9a24b;
+  --gold-light: #e6c976;
   --white: #ffffff;
-  --text-dark: #2b2b2b;
-  --text-muted: #555555;
-  --border-color: #c9a24b;
-  --background-light: #fff8e1;
+  --grey: #f7f7f9;
+  --text: #2b2b2b;
 }
 
-body {
-  background-color: #f9f9f9;
-  color: var(--text-dark);
-  font-family: 'Poppins', sans-serif;
-  padding: 40px 20px;
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  background: var(--white);
+  color: var(--text);
 }
 
-/* Container form */
+/* NAVBAR */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 40px;
+  background: rgba(255, 255, 255, 0.97);
+  box-shadow: 0 2px 15px rgba(123, 17, 19, 0.12);
+  backdrop-filter: blur(8px);
+}
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.logo {
+  height: 52px;
+  width: auto;
+  object-fit: contain;
+}
+.brand-text h1 {
+  color: var(--maroon);
+  font-size: 1.4rem;
+  letter-spacing: 1px;
+}
+.brand-text span {
+  font-size: 0.72rem;
+  color: var(--gold);
+  font-weight: 500;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+}
+.nav-links a {
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 500;
+  transition: 0.3s;
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--gold);
+  transition: 0.3s;
+}
+.nav-links a:hover::after,
+.nav-links a.active::after {
+  width: 100%;
+}
+.nav-links a:hover {
+  color: var(--maroon);
+}
+.btn-login {
+  background: linear-gradient(135deg, var(--maroon), var(--maroon-dark));
+  color: white;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 4px 12px rgba(123, 17, 19, 0.3);
+}
+.btn-login:hover {
+  transform: translateY(-2px);
+}
+.burger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
+.burger span {
+  width: 26px;
+  height: 3px;
+  background: var(--maroon);
+  border-radius: 3px;
+}
+
+/* FORM */
 .form-box {
-  background-color: var(--white);
-  max-width: 900px;
-  margin: 0 auto 60px auto;
+  background: var(--white);
   padding: 30px 40px;
   border-radius: 12px;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  max-width: 900px;
+  margin: 40px auto 60px auto;
 }
-
-/* Section header */
 .section-header h2 {
-  font-size: 2.8rem;
   color: var(--maroon);
+  font-size: 2.8rem;
   font-weight: 700;
   margin-bottom: 12px;
   text-align: center;
@@ -43,14 +134,12 @@ body {
   margin: 0 auto 40px auto;
   border-radius: 4px;
 }
-
-/* Fieldset styling */
 fieldset {
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--gold);
   border-radius: 10px;
   padding: 25px 30px;
   margin-bottom: 30px;
-  background-color: var(--background-light);
+  background: var(--grey);
 }
 legend {
   font-weight: 600;
@@ -58,8 +147,6 @@ legend {
   color: var(--maroon);
   padding: 0 10px;
 }
-
-/* Grid layouts */
 .grid-2 {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -70,14 +157,13 @@ legend {
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 18px;
 }
-
-/* Input groups */
 .input-group {
   display: flex;
   flex-direction: column;
   margin-bottom: 18px;
 }
 .input-group label {
+  font-size: 0.9rem;
   font-weight: 600;
   margin-bottom: 6px;
   color: var(--maroon);
@@ -86,7 +172,7 @@ legend {
 .input-group input[type="tel"],
 .input-group textarea {
   padding: 12px 15px;
-  border: 1.5px solid var(--border-color);
+  border: 1.5px solid var(--gold);
   border-radius: 8px;
   font-size: 1rem;
   transition: border-color 0.3s ease;
@@ -99,8 +185,6 @@ legend {
   border-color: var(--maroon);
   box-shadow: 0 0 8px rgba(123, 17, 19, 0.3);
 }
-
-/* Checklist (radio & checkbox) */
 .checklist {
   display: flex;
   flex-direction: column;
@@ -109,7 +193,7 @@ legend {
 .checklist label {
   cursor: pointer;
   font-size: 1rem;
-  color: var(--text-dark);
+  color: var(--text);
   user-select: none;
 }
 .checklist input[type="radio"],
@@ -117,8 +201,6 @@ legend {
   margin-right: 10px;
   accent-color: var(--maroon);
 }
-
-/* Poin permasalahan */
 .poin-row {
   display: flex;
   gap: 12px;
@@ -138,7 +220,7 @@ legend {
   transition: background-color 0.3s ease;
 }
 .btn-remove:hover {
-  background: #5a0c0e;
+  background: var(--maroon-dark);
 }
 .btn-add {
   background: transparent;
@@ -153,10 +235,8 @@ legend {
   margin-top: 10px;
 }
 .btn-add:hover {
-  background-color: #f0e6b8;
+  background-color: var(--gold-light);
 }
-
-/* Upload box */
 .upload-box {
   margin-top: 20px;
   padding: 18px;
@@ -174,12 +254,10 @@ legend {
 .upload-box input[type="file"] {
   margin-top: 6px;
 }
-
-/* Submit button */
 .btn-submit {
   width: 100%;
   padding: 16px;
-  background: linear-gradient(135deg, var(--maroon), #5a0c0e);
+  background: linear-gradient(135deg, var(--maroon), var(--maroon-dark));
   color: var(--white);
   font-weight: 700;
   font-size: 1.2rem;
@@ -191,11 +269,11 @@ legend {
   margin-top: 30px;
 }
 .btn-submit:hover {
-  background-color: #5a0c0e;
+  background-color: var(--maroon-dark);
   transform: translateY(-3px);
 }
 
-/* Responsive adjustments */
+/* Responsive */
 @media (max-width: 720px) {
   .grid-2 {
     grid-template-columns: 1fr;
@@ -211,184 +289,5 @@ legend {
   .btn-submit {
     font-size: 1rem;
     padding: 14px;
-  }
-}
-/* ===== NAVBAR STYLING ===== */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 40px;
-  background: rgba(255, 255, 255, 0.97);
-  box-shadow: 0 2px 15px rgba(123, 17, 19, 0.12);
-  backdrop-filter: blur(8px);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-.nav-brand {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.nav-brand a {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-}
-
-.logo {
-  height: 52px;
-  width: auto;
-  object-fit: contain;
-}
-
-.brand-text {
-  display: flex;
-  flex-direction: column;
-}
-
-.brand-text h1 {
-  color: var(--maroon);
-  font-size: 1.4rem;
-  letter-spacing: 1px;
-  margin: 0;
-  font-weight: 700;
-}
-
-.brand-text span {
-  font-size: 0.72rem;
-  color: var(--gold);
-  font-weight: 500;
-  margin: 0;
-}
-
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 26px;
-}
-
-.nav-links a {
-  text-decoration: none;
-  color: var(--text-dark);
-  font-weight: 500;
-  transition: color 0.3s ease;
-  position: relative;
-}
-
-.nav-links a::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: var(--gold);
-  transition: width 0.3s ease;
-}
-
-.nav-links a:hover,
-.nav-links a.active {
-  color: var(--maroon);
-}
-
-.nav-links a:hover::after,
-.nav-links a.active::after {
-  width: 100%;
-}
-
-.btn-login {
-  background: linear-gradient(135deg, var(--maroon), #5a0c0e);
-  color: var(--white);
-  border: none;
-  padding: 10px 22px;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(123, 17, 19, 0.3);
-  transition: transform 0.3s ease;
-}
-
-.btn-login:hover {
-  transform: translateY(-2px);
-}
-
-.burger {
-  display: none;
-  flex-direction: column;
-  gap: 5px;
-  cursor: pointer;
-  background: transparent;
-  border: none;
-  padding: 0;
-}
-
-.burger span {
-  width: 26px;
-  height: 3px;
-  background: var(--maroon);
-  border-radius: 3px;
-  transition: all 0.3s ease;
-}
-
-/* Responsive Navbar */
-@media (max-width: 860px) {
-  .navbar {
-    padding: 12px 20px;
-  }
-
-  .nav-links {
-    position: absolute;
-    top: 70px;
-    right: 0;
-    flex-direction: column;
-    background: var(--white);
-    width: 240px;
-    padding: 20px;
-    gap: 16px;
-    box-shadow: -4px 4px 20px rgba(0, 0, 0, 0.1);
-    transform: translateX(110%);
-    transition: transform 0.35s ease;
-  }
-
-  .nav-links.open {
-    transform: translateX(0);
-  }
-
-  .burger {
-    display: flex;
-  }
-
-  .brand-text h1 {
-    font-size: 1.2rem;
-  }
-
-  .brand-text span {
-    font-size: 0.65rem;
-  }
-}
-
-@media (max-width: 600px) {
-  .navbar {
-    padding: 10px 15px;
-  }
-
-  .logo {
-    height: 45px;
-  }
-
-  .brand-text h1 {
-    font-size: 1rem;
-  }
-
-  .brand-text span {
-    font-size: 0.6rem;
-  }
-
-  .nav-links {
-    width: 200px;
   }
 }
