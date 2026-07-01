@@ -51,6 +51,7 @@ html { scroll-behavior: smooth; }
 
 /* HERO */
 /* HERO dengan background gedung kejaksaan */
+/* HERO dengan background Gedung Kejaksaan Negeri Muna */
 .hero {
   position: relative;
   min-height: 90vh;
@@ -60,20 +61,50 @@ html { scroll-behavior: smooth; }
   text-align: center;
   overflow: hidden;
   background:
-    linear-gradient(135deg, rgba(255,255,255,0.92) 0%, rgba(253,246,236,0.90) 55%, rgba(251,234,234,0.88) 100%),
-    url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1600&q=80')
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,0.88) 0%,
+      rgba(253,246,236,0.82) 55%,
+      rgba(251,234,234,0.80) 100%
+    ),
+    url('https://raw.githubusercontent.com/ungumanggis199-svg/pidumyoucb/main/Background%20Gedung%20kn%20Muna.png')
       center/cover no-repeat;
-  background-blend-mode: overlay;
+  background-attachment: fixed;   /* efek parallax elegan saat scroll */
 }
 
-/* Layer gedung dengan efek fade di bawah */
+/* Gradasi lembut agar transisi ke section bawah mulus */
 .hero::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 40%, rgba(255,255,255,0.85) 100%);
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.30) 0%,
+    rgba(255,255,255,0.00) 35%,
+    rgba(255,255,255,0.90) 100%
+  );
   z-index: 1;
 }
+
+/* Garis emas dinamis di bawah hero */
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 100%; height: 6px;
+  background: linear-gradient(90deg, var(--maroon), var(--gold), var(--maroon));
+  background-size: 200% 100%;
+  z-index: 3;
+  animation: shimmer 5s linear infinite;
+}
+@keyframes shimmer {
+  0% { background-position: 0% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Pastikan konten hero di atas overlay */
+.hero-content { position: relative; z-index: 2; }
+
 
 .hero-content { z-index: 2; max-width: 720px; padding: 40px 20px; animation: fadeUp 1s ease; }
 .hero-logo {
@@ -132,3 +163,10 @@ html { scroll-behavior: smooth; }
 .blur-data.unblurred { filter: none; user-select: auto; }
 
 @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
+@media (max-width: 768px) {
+  .hero {
+    background-attachment: scroll;   /* nonaktifkan parallax di mobile */
+    background-position: center;
+  }
+}
+
