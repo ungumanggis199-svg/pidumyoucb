@@ -507,5 +507,21 @@ body {
   transform: translateY(-2px);
   box-shadow: 0 6px 18px rgba(123, 17, 19, 0.4);
 }
+@media (max-width: 600px) {
+  .modal-box {
+    width: 95%;
+    max-width: 320px;
+    padding: 24px 20px;
+  }
+
+  .modal-box h3 {
+    font-size: 1.2rem;
+  }
+
+  .modal-box .btn-submit {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+}
 
 
