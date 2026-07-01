@@ -261,3 +261,29 @@ document.addEventListener("DOMContentLoaded", () => {
   updateLoginButton();
   console.log("SIKORDA - Kejaksaan Negeri Muna berhasil dimuat.");
 });
+/* ============================================================
+   NAVIGASI SMOOTH SCROLL (kompensasi tinggi navbar sticky)
+   ============================================================ */
+function scrollToSection(id) {
+  const target = document.getElementById(id);
+  if (target) {
+    const navHeight = document.querySelector(".navbar").offsetHeight;
+    const top = target.getBoundingClientRect().top + window.pageYOffset - navHeight - 10;
+    window.scrollTo({ top: top, behavior: "smooth" });
+  }
+}
+
+// Terapkan ke semua link internal (href diawali #)
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener("click", function (e) {
+      const id = this.getAttribute("href").substring(1);
+      if (document.getElementById(id)) {
+        e.preventDefault();
+        scrollToSection(id);
+        // tutup menu mobile bila terbuka
+        document.querySelector(".nav-links").classList.remove("open");
+      }
+    });
+  });
+});
