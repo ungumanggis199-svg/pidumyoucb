@@ -212,6 +212,108 @@ function fileToBase64(file) {
     reader.readAsDataURL(file);
   });
 }
+function jsonpRequest(url, timeout = 15000) {
+  return new Promise((resolve, reject) => {
+    const callbackName =
+      "jsonpCallback_" + Date.now() + "_" + Math.random().toString(36).slice(2);
+
+    const script = document.createElement("script");
+
+    const timer = setTimeout(() => {
+      cleanup();
+      reject(new Error("Timeout mengambil hasil submit."));
+    }, timeout);
+
+    function cleanup() {
+      clearTimeout(timer);
+      if (script.parentNode) {
+        script.parentNode.removeChild(script);
+      }
+      delete window[callbackName];
+    }
+
+    window[callbackName] = function (data) {
+      cleanup();
+      resolve(data);
+    };
+
+    const separator = url.includes("?") ? "&" : "?";
+    script.src = url + separator + "callback=" + encodeURIComponent(callbackName);
+
+    script.onerror = function () {
+      cleanup();
+      reject(new Error("Gagal mengambil hasil submit."));
+    };
+
+    document.body.appendChild(script);
+  });
+}
+
+function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function waitSubmitResult(clientToken) {
+  for (let i = 0; i < 8; i++) {
+    await delay(i === 0 ? 500 : 1000);
+
+    const url =
+      GOOGLE_SCRIPT_URL +
+      "?action=submit_result&client_token=" +
+      encodeURIComponent(clientToken);
+
+    const result = await jsonpRequest(url);
+
+    if (result.status === "success" || result.status === "error") {
+      return result;
+    }
+  }
+
+  return {
+    status: "pending",
+    message: "Data masih diproses."
+  };
+}
+
+function showSuccessPage(idPermohonan, fileUrl) {
+  const form = document.getElementById("formPermohonan");
+  const successPage = document.getElementById("successPage");
+  const successId = document.getElementById("successIdPermohonan");
+  const fileLink = document.getElementById("successFileLink");
+
+  if (successId) {
+    successId.textContent = idPermohonan || "-";
+  }
+
+  if (fileLink && fileUrl) {
+    fileLink.href = fileUrl;
+    fileLink.hidden = false;
+  }
+
+  if (form) {
+    form.style.display = "none";
+  }
+
+  if (successPage) {
+    successPage.hidden = false;
+    successPage.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  }
+}
+
+function resetPermasalahan() {
+  const wrap = document.getElementById("permasalahanWrap");
+
+  if (wrap) {
+    wrap.innerHTML =
+      '<div class="poin-row">' +
+      '<input type="text" name="permasalahan[]" placeholder="1. Tuliskan permasalahan...">' +
+      '<button type="button" class="btn-remove" onclick="removePoin(this)">&times;</button>' +
+      '</div>';
+  }
+}
 /* 9. Filter tabel monitoring */
 function filterTable() {
   const searchBox = document.getElementById("searchBox");
@@ -363,10 +465,10 @@ if (formPermohonan) {
         "jaksa_peneliti",
         "jenis_koordinasi",
         "urgensi",
-          "kronologi",
+        "kronologi",
         "cara_koordinasi",
         "nomor_hp"
-         ].forEach(key => {
+      ].forEach(key => {
         data[key] = (formData.get(key) || "").trim();
       });
 
@@ -389,6 +491,9 @@ if (formPermohonan) {
         submitBtn.textContent = "Mengirim...";
       }
 
+      const clientToken = "SIKORDA-" + Date.now() + "-" + Math.random().toString(36).slice(2);
+      data["client_token"] = clientToken;
+
       const fileInput = document.getElementById("fileUpload");
 
       if (fileInput && fileInput.files.length > 0) {
@@ -408,28 +513,20 @@ if (formPermohonan) {
         body: JSON.stringify(data)
       });
 
-      alert(
-        "Permohonan berhasil dikirim.\n\n" +
-        "ID Permohonan Anda: " + data["id_permohonan"] + "\n\n" +
-        "File pendukung telah dikirim ke Google Drive."
-      );
+      const result = await waitSubmitResult(clientToken);
 
-      this.reset();
-
-      const wrap = document.getElementById("permasalahanWrap");
-      if (wrap) {
-        wrap.innerHTML =
-          '<div class="poin-row">' +
-          '<input type="text" name="permasalahan[]" placeholder="1. Tuliskan permasalahan...">' +
-          '<button type="button" class="btn-remove" onclick="removePoin(this)">&times;</button>' +
-          '</div>';
+      if (result.status === "success") {
+        showSuccessPage(result.id_permohonan, result.file_url);
+        this.reset();
+        resetPermasalahan();
+        clearFormErrors();
+      } else {
+        showSuccessPage("ID sedang diproses. Silakan cek spreadsheet atau monitoring.", "");
       }
-
-      clearFormErrors();
 
     } catch (err) {
       console.error(err);
-      alert("Terjadi kesalahan saat mengirim. Silakan coba lagi.");
+      showSuccessPage("Terjadi kesalahan saat mengambil ID. Silakan cek spreadsheet.", "");
     } finally {
       if (submitBtn) {
         submitBtn.disabled = false;
@@ -469,3 +566,4 @@ if (formPermohonan) {
     });
   }
 });
+
