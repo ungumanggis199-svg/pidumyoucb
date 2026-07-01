@@ -418,4 +418,17 @@ body {
   opacity: 0.9;
 }
 
+.modal {
+  display: none; /* tersembunyi secara default */
+  position: fixed;
+  inset: 0; /* shorthand untuk top:0; right:0; bottom:0; left:0; */
+  background: rgba(0, 0, 0, 0.55); /* latar belakang semi transparan */
+  justify-content: center;
+  align-items: center;
+  z-index: 200; /* pastikan modal di atas elemen lain */
+}
+
+.modal.show {
+  display: flex; /* tampilkan modal dengan flexbox */
+}
 
