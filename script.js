@@ -83,3 +83,9 @@ document.addEventListener("DOMContentLoaded", () => {
   updateLoginButton();
   console.log("SIKORDA - Kejaksaan Negeri Muna berhasil dimuat.");
 });
+document.addEventListener("click", function (e) {
+  const modal = document.getElementById("loginModal");
+  if (e.target === modal) {
+    modal.classList.remove("show");
+  }
+});
