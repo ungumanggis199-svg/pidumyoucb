@@ -576,13 +576,13 @@ body {
     max-width: 320px;
     padding: 24px 20px;
     justify-content: center;
-  align-items: center;
+    align-items: center;
   }
 
   .modal-box h3 {
     font-size: 1.2rem;
     justify-content: center;
-  align-items: center;
+    align-items: center;
   }
 
   .modal-box .btn-submit {
