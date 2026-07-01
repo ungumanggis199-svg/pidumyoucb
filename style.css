@@ -516,11 +516,15 @@ body {
 .modal-logo {
   height: 70px;
   margin-bottom: 12px;
+  justify-content: center;
+  align-items: center;
 }
 
 .modal-box h3 {
   color: var(--maroon);
   margin-bottom: 20px;
+  justify-content: center;
+  align-items: center;
 }
 
 .modal-box .input-group {
