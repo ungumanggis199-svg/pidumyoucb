@@ -511,7 +511,7 @@ body {
   transform: translateY(-2px);
   box-shadow: 0 6px 18px rgba(123, 17, 19, 0.4);
 }
-@media (max-width: 600px) {
+@media (max-width: 480px) {
   .modal-box {
     width: 95%;
     max-width: 320px;
