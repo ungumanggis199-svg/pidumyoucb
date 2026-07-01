@@ -418,17 +418,94 @@ body {
   opacity: 0.9;
 }
 
+/* ===== MODAL LOGIN ===== */
 .modal {
-  display: none; /* tersembunyi secara default */
+  display: none; /* Modal tersembunyi secara default */
   position: fixed;
-  inset: 0; /* shorthand untuk top:0; right:0; bottom:0; left:0; */
-  background: rgba(0, 0, 0, 0.55); /* latar belakang semi transparan */
+  inset: 0; /* shorthand untuk top: 0; right: 0; bottom: 0; left: 0 */
+  background: rgba(0, 0, 0, 0.55); /* Overlay gelap semi-transparan */
   justify-content: center;
   align-items: center;
-  z-index: 200; /* pastikan modal di atas elemen lain */
+  z-index: 200; /* Pastikan modal berada di atas elemen lain */
 }
 
 .modal.show {
-  display: flex; /* tampilkan modal dengan flexbox */
+  display: flex; /* Tampilkan modal dengan flexbox */
 }
+
+.modal-box {
+  background: #fff;
+  padding: 36px 30px;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 380px; /* Batas lebar modal */
+  text-align: center;
+  position: relative;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 18px;
+  font-size: 1.6rem;
+  cursor: pointer;
+  color: #999;
+}
+
+.modal-logo {
+  height: 70px;
+  margin-bottom: 12px;
+}
+
+.modal-box h3 {
+  color: var(--maroon);
+  margin-bottom: 20px;
+}
+
+.modal-box .input-group {
+  text-align: left;
+  margin-bottom: 14px;
+}
+
+.modal-box .input-group label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #444;
+}
+
+.modal-box .input-group input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.92rem;
+  transition: 0.3s;
+}
+
+.modal-box .input-group input:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201, 162, 75, 0.2);
+}
+
+.modal-box .btn-submit {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--maroon), var(--maroon-dark));
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.modal-box .btn-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(123, 17, 19, 0.4);
+}
+
 
