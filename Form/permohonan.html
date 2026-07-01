@@ -158,7 +158,13 @@
         </div>
         <div class="upload-box">
           <label>Upload File (maksimal 10MB)</label>
-          <input type="file" id="fileUpload" onchange="checkFileSize(this)">
+          <input 
+  type="file" 
+  id="fileUpload" 
+  name="fileUpload"
+  accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+  onchange="checkFileSize(this)"
+>
           <small>Format: PDF, JPG, PNG, DOCX</small>
         </div>
       </fieldset>
