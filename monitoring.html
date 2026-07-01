@@ -362,11 +362,117 @@
   cursor: not-allowed;
 }
 
+/* EDIT TINDAK LANJUT JAKSA */
+.edit-box {
+  grid-column: 1 / -1;
+  margin-top: 22px;
+  padding: 22px;
+  border-radius: 16px;
+  background: rgba(201, 162, 75, 0.13);
+  border: 1.5px solid rgba(201, 162, 75, 0.55);
+}
+
+.edit-box-title {
+  margin: 0 0 18px;
+  color: #7b1113;
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+.edit-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.edit-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.edit-field.full {
+  grid-column: 1 / -1;
+}
+
+.edit-field label {
+  color: #541014;
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.edit-field select,
+.edit-field input,
+.edit-field textarea {
+  width: 100%;
+  min-height: 50px;
+  padding: 12px 14px;
+  border: 1.5px solid #c9a24b;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #333;
+  font-family: "Poppins", sans-serif;
+  font-size: 0.95rem;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.edit-field textarea {
+  min-height: 120px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.edit-field select:focus,
+.edit-field input:focus,
+.edit-field textarea:focus {
+  border-color: #7b1113;
+  box-shadow: 0 0 0 3px rgba(123, 17, 19, 0.12);
+}
+
+.edit-actions {
+  margin-top: 18px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-save-update {
+  border: none;
+  border-radius: 11px;
+  padding: 13px 22px;
+  background: linear-gradient(135deg, #7b1113, #5a0c0e);
+  color: #ffffff;
+  font-family: "Poppins", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(123, 17, 19, 0.26);
+}
+
+.btn-save-update:hover {
+  transform: translateY(-1px);
+}
+
+.btn-save-update:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+}
+
 @media (max-width: 720px) {
   .edit-grid {
     grid-template-columns: 1fr;
   }
+
+  .edit-actions {
+    justify-content: stretch;
+  }
+
+  .btn-save-update {
+    width: 100%;
+  }
 }
+        
   </style>
 </head>
 
@@ -741,30 +847,35 @@
 function editJaksaBox(item) {
   return (
     '<div class="edit-box">' +
-      '<h4>Edit Tindak Lanjut Jaksa</h4>' +
+      '<h4 class="edit-box-title">Edit Tindak Lanjut Jaksa</h4>' +
 
       '<div class="edit-grid">' +
-        '<label>Status Permohonan' +
+        '<div class="edit-field">' +
+          '<label for="editStatus">Status Permohonan</label>' +
           '<select id="editStatus">' +
             statusOption("Menunggu", item.status) +
             statusOption("Diproses", item.status) +
             statusOption("Selesai", item.status) +
             statusOption("Ditolak", item.status) +
           '</select>' +
-        '</label>' +
+        '</div>' +
 
-        '<label>Jadwal Koordinasi' +
+        '<div class="edit-field">' +
+          '<label for="editJadwal">Jadwal Koordinasi</label>' +
           '<input type="datetime-local" id="editJadwal" value="' + formatDatetimeLocal(item.jadwal_koordinasi) + '">' +
-        '</label>' +
+        '</div>' +
 
-        '<label style="grid-column: 1 / -1;">Catatan Jaksa' +
+        '<div class="edit-field full">' +
+          '<label for="editCatatan">Catatan Jaksa</label>' +
           '<textarea id="editCatatan" placeholder="Tulis catatan jaksa...">' + escapeHtml(item.catatan_jaksa || "") + '</textarea>' +
-        '</label>' +
+        '</div>' +
       '</div>' +
 
-      '<button type="button" class="btn-save-update" onclick="saveJaksaUpdate(\'' + escapeJs(item.id_permohonan) + '\')">' +
-        'Simpan Perubahan' +
-      '</button>' +
+      '<div class="edit-actions">' +
+        '<button type="button" class="btn-save-update" onclick="saveJaksaUpdate(\'' + escapeJs(item.id_permohonan) + '\')">' +
+          'Simpan Perubahan' +
+        '</button>' +
+      '</div>' +
     '</div>'
   );
 }
@@ -786,7 +897,14 @@ function formatDatetimeLocal(value) {
 
   return "";
 }
-
+function escapeJs(value) {
+  return String(value === undefined || value === null ? "" : value)
+    .replace(/\\/g, "\\\\")
+    .replace(/'/g, "\\'")
+    .replace(/"/g, '\\"')
+    .replace(/\n/g, "\\n")
+    .replace(/\r/g, "");
+}
 async function saveJaksaUpdate(idPermohonan) {
   const sessionToken = sessionStorage.getItem("jaksaSessionToken");
 
