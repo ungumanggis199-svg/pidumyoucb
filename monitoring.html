@@ -39,6 +39,36 @@
       color: #7b1113;
     }
 
+    .access-warning {
+      display: none;
+      margin-bottom: 18px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      background: rgba(123, 17, 19, 0.09);
+      color: #7b1113;
+      border-left: 5px solid #7b1113;
+      font-weight: 600;
+    }
+
+    .access-warning.show {
+      display: block;
+    }
+
+    .login-status {
+      display: none;
+      margin-bottom: 18px;
+      padding: 13px 16px;
+      border-radius: 12px;
+      background: rgba(31, 143, 77, 0.12);
+      color: #126335;
+      border-left: 5px solid #1f8f4d;
+      font-weight: 700;
+    }
+
+    .login-status.show {
+      display: block;
+    }
+
     .monitoring-tools {
       display: grid;
       grid-template-columns: 1fr 260px;
@@ -57,6 +87,7 @@
       color: #333;
       font-size: 1rem;
       outline: none;
+      font-family: "Poppins", sans-serif;
     }
 
     .monitoring-tools input:focus,
@@ -76,20 +107,20 @@
     .monitor-table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 1050px;
+      min-width: 1180px;
     }
 
     .monitor-table th {
       background: #7b1113;
       color: #fff;
       text-align: left;
-      padding: 14px 14px;
+      padding: 14px;
       font-size: 0.9rem;
       white-space: nowrap;
     }
 
     .monitor-table td {
-      padding: 14px 14px;
+      padding: 14px;
       border-bottom: 1px solid rgba(201, 162, 75, 0.25);
       color: #333;
       font-size: 0.92rem;
@@ -98,6 +129,12 @@
 
     .monitor-table tbody tr:hover {
       background: rgba(201, 162, 75, 0.08);
+    }
+
+    .monitor-note {
+      max-width: 250px;
+      white-space: normal;
+      line-height: 1.5;
     }
 
     .suspect-name {
@@ -151,6 +188,7 @@
       font-weight: 700;
       cursor: pointer;
       white-space: nowrap;
+      font-family: "Poppins", sans-serif;
     }
 
     .btn-detail:hover {
@@ -163,21 +201,6 @@
       text-align: center;
       color: #666;
       font-weight: 600;
-    }
-
-    .access-warning {
-      display: none;
-      margin-bottom: 18px;
-      padding: 14px 16px;
-      border-radius: 12px;
-      background: rgba(123, 17, 19, 0.09);
-      color: #7b1113;
-      border-left: 5px solid #7b1113;
-      font-weight: 600;
-    }
-
-    .access-warning.show {
-      display: block;
     }
 
     .detail-modal {
@@ -198,7 +221,7 @@
 
     .detail-card {
       width: 100%;
-      max-width: 920px;
+      max-width: 940px;
       margin: 35px auto;
       background: #fff;
       border-radius: 20px;
@@ -258,7 +281,6 @@
       margin-bottom: 7px;
     }
 
-    .detail-item strong,
     .detail-item p {
       margin: 0;
       color: #333;
@@ -277,6 +299,104 @@
       text-decoration: underline;
     }
 
+    /* EDIT TINDAK LANJUT JAKSA */
+    .edit-box {
+      grid-column: 1 / -1;
+      margin-top: 22px;
+      padding: 24px;
+      border-radius: 18px;
+      background: rgba(201, 162, 75, 0.13);
+      border: 1.5px solid rgba(201, 162, 75, 0.55);
+    }
+
+    .edit-box-title {
+      margin: 0 0 18px;
+      color: #7b1113;
+      font-size: 1.18rem;
+      font-weight: 800;
+    }
+
+    .edit-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      align-items: start;
+    }
+
+    .edit-field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .edit-field.full {
+      grid-column: 1 / -1;
+    }
+
+    .edit-field label {
+      color: #541014;
+      font-size: 0.9rem;
+      font-weight: 800;
+    }
+
+    .edit-field select,
+    .edit-field input,
+    .edit-field textarea {
+      width: 100%;
+      min-height: 52px;
+      padding: 12px 14px;
+      border: 1.5px solid #c9a24b;
+      border-radius: 10px;
+      background: #ffffff;
+      color: #333;
+      font-family: "Poppins", sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      box-sizing: border-box;
+    }
+
+    .edit-field textarea {
+      min-height: 130px;
+      resize: vertical;
+      line-height: 1.6;
+    }
+
+    .edit-field select:focus,
+    .edit-field input:focus,
+    .edit-field textarea:focus {
+      border-color: #7b1113;
+      box-shadow: 0 0 0 3px rgba(123, 17, 19, 0.12);
+    }
+
+    .edit-actions {
+      margin-top: 18px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .btn-save-update {
+      border: none;
+      border-radius: 11px;
+      padding: 13px 22px;
+      background: linear-gradient(135deg, #7b1113, #5a0c0e);
+      color: #ffffff;
+      font-family: "Poppins", sans-serif;
+      font-size: 0.95rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(123, 17, 19, 0.26);
+    }
+
+    .btn-save-update:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-save-update:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+      transform: none;
+    }
+
     @media (max-width: 720px) {
       .monitoring-box {
         padding: 22px 16px;
@@ -290,196 +410,25 @@
         padding: 24px 18px;
       }
 
-      .detail-grid {
+      .detail-grid,
+      .edit-grid {
         grid-template-columns: 1fr;
-.monitor-note {
-  max-width: 240px;
-  white-space: normal;
-  line-height: 1.5;
-}
+      }
 
-.edit-box {
-  grid-column: 1 / -1;
-  margin-top: 12px;
-  padding: 18px;
-  border-radius: 14px;
-  background: rgba(201, 162, 75, 0.12);
-  border: 1px solid rgba(201, 162, 75, 0.45);
-}
+      .edit-actions {
+        justify-content: stretch;
+      }
 
-.edit-box h4 {
-  color: #7b1113;
-  margin-bottom: 14px;
-  font-size: 1.05rem;
-}
-
-.edit-grid {
-  display: grid;
-  grid-template-columns: 220px 1fr;
-  gap: 14px;
-}
-
-.edit-grid label {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-  color: #541014;
-  font-weight: 700;
-  font-size: 0.9rem;
-}
-
-.edit-grid select,
-.edit-grid input,
-.edit-grid textarea {
-  width: 100%;
-  min-height: 46px;
-  padding: 11px 13px;
-  border: 1.5px solid #c9a24b;
-  border-radius: 10px;
-  font-family: inherit;
-  font-size: 0.95rem;
-  outline: none;
-}
-
-.edit-grid textarea {
-  min-height: 110px;
-  resize: vertical;
-}
-
-.btn-save-update {
-  margin-top: 14px;
-  border: none;
-  border-radius: 10px;
-  padding: 12px 18px;
-  background: linear-gradient(135deg, #7b1113, #5a0c0e);
-  color: #fff;
-  font-weight: 800;
-  cursor: pointer;
-}
-
-.btn-save-update:disabled {
-  opacity: 0.65;
-  cursor: not-allowed;
-}
-
-/* EDIT TINDAK LANJUT JAKSA */
-.edit-box {
-  grid-column: 1 / -1;
-  margin-top: 22px;
-  padding: 22px;
-  border-radius: 16px;
-  background: rgba(201, 162, 75, 0.13);
-  border: 1.5px solid rgba(201, 162, 75, 0.55);
-}
-
-.edit-box-title {
-  margin: 0 0 18px;
-  color: #7b1113;
-  font-size: 1.15rem;
-  font-weight: 800;
-}
-
-.edit-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px;
-}
-
-.edit-field {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.edit-field.full {
-  grid-column: 1 / -1;
-}
-
-.edit-field label {
-  color: #541014;
-  font-size: 0.9rem;
-  font-weight: 800;
-}
-
-.edit-field select,
-.edit-field input,
-.edit-field textarea {
-  width: 100%;
-  min-height: 50px;
-  padding: 12px 14px;
-  border: 1.5px solid #c9a24b;
-  border-radius: 10px;
-  background: #ffffff;
-  color: #333;
-  font-family: "Poppins", sans-serif;
-  font-size: 0.95rem;
-  outline: none;
-  box-sizing: border-box;
-}
-
-.edit-field textarea {
-  min-height: 120px;
-  resize: vertical;
-  line-height: 1.6;
-}
-
-.edit-field select:focus,
-.edit-field input:focus,
-.edit-field textarea:focus {
-  border-color: #7b1113;
-  box-shadow: 0 0 0 3px rgba(123, 17, 19, 0.12);
-}
-
-.edit-actions {
-  margin-top: 18px;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.btn-save-update {
-  border: none;
-  border-radius: 11px;
-  padding: 13px 22px;
-  background: linear-gradient(135deg, #7b1113, #5a0c0e);
-  color: #ffffff;
-  font-family: "Poppins", sans-serif;
-  font-size: 0.95rem;
-  font-weight: 800;
-  cursor: pointer;
-  box-shadow: 0 6px 18px rgba(123, 17, 19, 0.26);
-}
-
-.btn-save-update:hover {
-  transform: translateY(-1px);
-}
-
-.btn-save-update:disabled {
-  opacity: 0.65;
-  cursor: not-allowed;
-  transform: none;
-}
-
-@media (max-width: 720px) {
-  .edit-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .edit-actions {
-    justify-content: stretch;
-  }
-
-  .btn-save-update {
-    width: 100%;
-  }
-}
-        
+      .btn-save-update {
+        width: 100%;
+      }
+    }
   </style>
 </head>
 
 <body>
   <div id="particles-js"></div>
 
-  <!-- NAVBAR -->
   <header class="navbar">
     <div class="nav-brand">
       <a href="index.html" aria-label="Beranda SIKORDA">
@@ -510,7 +459,6 @@
     </button>
   </header>
 
-  <!-- MONITORING -->
   <main class="section">
     <div class="page-title-box">
       <h2>Monitoring Permohonan Koordinasi</h2>
@@ -520,8 +468,10 @@
     <div class="monitoring-box">
       <div class="monitoring-info">
         <strong>Informasi Monitoring</strong>
-        Data permohonan dapat dicari berdasarkan ID permohonan, nama penyidik, nama satuan, nomor LP, jenis koordinasi, status, dan nama tersangka. Nama tersangka tetap disamarkan pada tampilan umum. Detail permohonan hanya dapat dibuka setelah login sebagai Jaksa.
+        Data permohonan dapat dicari berdasarkan ID permohonan, nama penyidik, nama satuan, nomor LP, status, dan nama tersangka. Nama tersangka tetap disamarkan pada tampilan umum. Detail permohonan dan tindak lanjut hanya dapat dibuka setelah login sebagai Jaksa.
       </div>
+
+      <div id="loginStatus" class="login-status"></div>
 
       <div id="accessWarning" class="access-warning">
         Detail permohonan hanya dapat dibuka setelah login sebagai Jaksa.
@@ -572,10 +522,10 @@
     </div>
   </main>
 
-  <!-- DETAIL MODAL -->
   <div id="detailModal" class="detail-modal">
     <div class="detail-card">
       <button type="button" class="detail-close" onclick="closeDetailModal()">&times;</button>
+
       <h3>Detail Permohonan</h3>
       <p class="detail-subtitle">Data lengkap permohonan koordinasi.</p>
 
@@ -583,7 +533,6 @@
     </div>
   </div>
 
-  <!-- MODAL LOGIN -->
   <div id="loginModal" class="modal">
     <div class="modal-box">
       <button type="button" class="modal-close" onclick="closeLogin()">&times;</button>
@@ -613,20 +562,21 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
-  <script src="script.js"></script>
 
   <script>
-    const MONITORING_SCRIPT_URL =
-      typeof GOOGLE_SCRIPT_URL !== "undefined"
-        ? GOOGLE_SCRIPT_URL
-        : "https://script.google.com/macros/s/AKfycbwZhzBasdie7UqEmTrLucc4NrwkHexypNxwW4To4yUYGOOov51vkqenUSGlsiMUZgIK/exec";
+    const MONITORING_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwZhzBasdie7UqEmTrLucc4NrwkHexypNxwW4To4yUYGOOov51vkqenUSGlsiMUZgIK/exec";
 
     let monitoringData = [];
     let filteredMonitoringData = [];
 
     document.addEventListener("DOMContentLoaded", function () {
+      updateLoginButton();
+      updateLoginStatus();
+      initParticles();
+
       const searchBox = document.getElementById("searchBox");
       const statusFilter = document.getElementById("statusFilter");
+      const loginForm = document.getElementById("loginForm");
 
       if (searchBox) {
         searchBox.addEventListener("input", renderMonitoringTable);
@@ -636,12 +586,167 @@
         statusFilter.addEventListener("change", renderMonitoringTable);
       }
 
+      if (loginForm) {
+        loginForm.addEventListener("submit", handleLoginSubmit);
+      }
+
+      window.addEventListener("click", function (e) {
+        const loginModal = document.getElementById("loginModal");
+        const detailModal = document.getElementById("detailModal");
+
+        if (e.target === loginModal) closeLogin();
+        if (e.target === detailModal) closeDetailModal();
+      });
+
+      window.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          closeLogin();
+          closeDetailModal();
+        }
+      });
+
       loadMonitoringData();
 
       setInterval(function () {
         applyNamePrivacy();
       }, 500);
     });
+
+    function toggleMenu() {
+      const nav = document.querySelector(".nav-links");
+      const burger = document.querySelector(".burger");
+
+      if (!nav) return;
+
+      nav.classList.toggle("open");
+
+      if (burger) {
+        const isOpen = nav.classList.contains("open");
+        burger.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      }
+    }
+
+    function openLogin() {
+      const modal = document.getElementById("loginModal");
+      if (modal) modal.classList.add("show");
+    }
+
+    function closeLogin() {
+      const modal = document.getElementById("loginModal");
+      if (modal) modal.classList.remove("show");
+    }
+
+    function updateLoginButton() {
+      const btn = document.querySelector(".btn-login");
+      const isLoggedIn = sessionStorage.getItem("isJaksaLoggedIn") === "true";
+
+      if (!btn) return;
+
+      if (isLoggedIn) {
+        btn.textContent = "Logout";
+        btn.onclick = logoutJaksa;
+      } else {
+        btn.textContent = "Login Jaksa";
+        btn.onclick = openLogin;
+      }
+    }
+
+    function logoutJaksa() {
+      sessionStorage.removeItem("isJaksaLoggedIn");
+      sessionStorage.removeItem("jaksaName");
+      sessionStorage.removeItem("jaksaUsername");
+      sessionStorage.removeItem("jaksaSessionToken");
+
+      updateLoginButton();
+      updateLoginStatus();
+      applyNamePrivacy();
+      renderMonitoringTable();
+
+      alert("Anda telah logout.");
+    }
+
+    function updateLoginStatus() {
+      const box = document.getElementById("loginStatus");
+      const isLoggedIn = sessionStorage.getItem("isJaksaLoggedIn") === "true";
+      const name = sessionStorage.getItem("jaksaName") || "Jaksa";
+
+      if (!box) return;
+
+      if (isLoggedIn) {
+        box.textContent = "Login aktif sebagai: " + name;
+        box.classList.add("show");
+      } else {
+        box.textContent = "";
+        box.classList.remove("show");
+      }
+    }
+
+    async function handleLoginSubmit(e) {
+      e.preventDefault();
+
+      const form = e.currentTarget;
+      const username = form.username.value.trim();
+      const password = form.password.value.trim();
+      const submitBtn = form.querySelector(".btn-submit");
+
+      if (!username || !password) {
+        alert("Username / NIP dan password wajib diisi.");
+        return;
+      }
+
+      try {
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = "Memeriksa...";
+        }
+
+        const clientToken =
+          "LOGIN-" + Date.now() + "-" + Math.random().toString(36).slice(2);
+
+        await fetch(MONITORING_SCRIPT_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: {
+            "Content-Type": "text/plain;charset=utf-8"
+          },
+          body: JSON.stringify({
+            action: "validate_login",
+            username: username,
+            password: password,
+            client_token: clientToken
+          })
+        });
+
+        const result = await waitMonitoringResult("login_result", clientToken);
+
+        if (result.status === "success") {
+          sessionStorage.setItem("isJaksaLoggedIn", "true");
+          sessionStorage.setItem("jaksaName", result.nama_jaksa || username);
+          sessionStorage.setItem("jaksaUsername", username);
+          sessionStorage.setItem("jaksaSessionToken", result.session_token || "");
+
+          closeLogin();
+          updateLoginButton();
+          updateLoginStatus();
+          applyNamePrivacy();
+          renderMonitoringTable();
+
+          alert("Login berhasil. Selamat datang, " + (result.nama_jaksa || "Jaksa") + ".");
+        } else {
+          alert(result.message || "Username / NIP atau password salah.");
+        }
+
+      } catch (error) {
+        console.error(error);
+        alert("Login gagal. Silakan coba lagi.");
+
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Masuk";
+        }
+      }
+    }
 
     async function loadMonitoringData() {
       const body = document.getElementById("monitorBody");
@@ -663,7 +768,7 @@
         if (body) {
           body.innerHTML =
             '<tr>' +
-            '<td colspan="12" class="empty-state">Data belum dapat dimuat. Pastikan Apps Script sudah dideploy ulang.</td>' +
+              '<td colspan="12" class="empty-state">Data belum dapat dimuat. Pastikan Apps Script sudah dideploy ulang.</td>' +
             '</tr>';
         }
       }
@@ -692,7 +797,9 @@
           item.jaksa_peneliti,
           item.jenis_koordinasi,
           item.urgensi,
-          item.status
+          item.status,
+          item.catatan_jaksa,
+          item.jadwal_koordinasi
         ].join(" ").toLowerCase();
 
         const statusText = String(item.status || "").toLowerCase();
@@ -706,7 +813,7 @@
       if (filteredMonitoringData.length === 0) {
         body.innerHTML =
           '<tr>' +
-          '<td colspan="12" class="empty-state">Data tidak ditemukan.</td>' +
+            '<td colspan="12" class="empty-state">Data tidak ditemukan.</td>' +
           '</tr>';
         return;
       }
@@ -730,7 +837,7 @@
             '<td>' + escapeHtml(item.urgensi || "-") + '</td>' +
             '<td><span class="status-badge ' + statusClass + '">' + escapeHtml(item.status || "Menunggu") + '</span></td>' +
             '<td class="monitor-note">' + escapeHtml(item.catatan_jaksa || "-") + '</td>' +
-            '<td>' + escapeHtml(item.jadwal_koordinasi || "-") + '</td>' +
+            '<td>' + escapeHtml(formatJadwalDisplay(item.jadwal_koordinasi) || "-") + '</td>' +
             '<td><button type="button" class="btn-detail" onclick="openDetailPermohonan(' + index + ')">Lihat Detail</button></td>' +
           '</tr>'
         );
@@ -755,65 +862,62 @@
     }
 
     function openDetailPermohonan(index) {
-  const isLoggedIn = sessionStorage.getItem("isJaksaLoggedIn") === "true";
-  const warning = document.getElementById("accessWarning");
+      const isLoggedIn = sessionStorage.getItem("isJaksaLoggedIn") === "true";
+      const warning = document.getElementById("accessWarning");
 
-  if (!isLoggedIn) {
-    if (warning) {
-      warning.classList.add("show");
-      warning.scrollIntoView({ behavior: "smooth", block: "center" });
+      if (!isLoggedIn) {
+        if (warning) {
+          warning.classList.add("show");
+          warning.scrollIntoView({ behavior: "smooth", block: "center" });
 
-      setTimeout(function () {
-        warning.classList.remove("show");
-      }, 4500);
+          setTimeout(function () {
+            warning.classList.remove("show");
+          }, 4500);
+        }
+
+        openLogin();
+        return;
+      }
+
+      const item = filteredMonitoringData[index];
+
+      if (!item) return;
+
+      const detailContent = document.getElementById("detailContent");
+      const detailModal = document.getElementById("detailModal");
+
+      if (!detailContent || !detailModal) return;
+
+      detailContent.innerHTML =
+        detailItem("ID Permohonan", item.id_permohonan) +
+        detailItem("Timestamp", item.timestamp) +
+        detailItem("Nama Penyidik", item.nama_penyidik) +
+        detailItem("Nama Satuan", item.nama_satuan) +
+        detailItem("Nomor LP", item.nomor_lp) +
+        detailItem("Nomor SPDP", item.nomor_spdp) +
+        detailItem("Nama Tersangka", item.nama_tersangka) +
+        detailItem("Pasal", item.pasal) +
+        detailItem("Jaksa Peneliti", item.jaksa_peneliti) +
+        detailItem("Jenis Koordinasi", item.jenis_koordinasi) +
+        detailItem("Urgensi", item.urgensi) +
+        detailItem("Cara Koordinasi", item.cara_koordinasi) +
+        detailItem("Nomor HP", item.nomor_hp) +
+        detailItem("Status", item.status) +
+        detailItem("Jadwal Koordinasi", formatJadwalDisplay(item.jadwal_koordinasi) || "-") +
+        detailItem("Permasalahan", item.permasalahan, true) +
+        detailItem("Kronologi", item.kronologi, true) +
+        detailItem("Sudah Dilakukan", item.sudah_dilakukan, true) +
+        detailItem("Dimohon", item.dimohon, true) +
+        detailItem("Dokumen", item.dokumen, true) +
+        detailFileItem("File Pendukung", item.file_url) +
+        detailItem("Catatan Jaksa", item.catatan_jaksa || "-", true) +
+        detailItem("Tanggal Update", item.tanggal_update || "-") +
+        detailItem("Ditangani Oleh", item.ditangani_oleh || "-") +
+        detailItem("Hasil Koordinasi", item.hasil_koordinasi || "-", true) +
+        editJaksaBox(item);
+
+      detailModal.classList.add("show");
     }
-
-    if (typeof openLogin === "function") {
-      openLogin();
-    }
-
-    return;
-  }
-
-  const item = filteredMonitoringData[index];
-
-  if (!item) return;
-
-  const detailContent = document.getElementById("detailContent");
-  const detailModal = document.getElementById("detailModal");
-
-  if (!detailContent || !detailModal) return;
-
-  detailContent.innerHTML =
-    detailItem("ID Permohonan", item.id_permohonan) +
-    detailItem("Timestamp", item.timestamp) +
-    detailItem("Nama Penyidik", item.nama_penyidik) +
-    detailItem("Nama Satuan", item.nama_satuan) +
-    detailItem("Nomor LP", item.nomor_lp) +
-    detailItem("Nomor SPDP", item.nomor_spdp) +
-    detailItem("Nama Tersangka", item.nama_tersangka) +
-    detailItem("Pasal", item.pasal) +
-    detailItem("Jaksa Peneliti", item.jaksa_peneliti) +
-    detailItem("Jenis Koordinasi", item.jenis_koordinasi) +
-    detailItem("Urgensi", item.urgensi) +
-    detailItem("Cara Koordinasi", item.cara_koordinasi) +
-    detailItem("Nomor HP", item.nomor_hp) +
-    detailItem("Status", item.status) +
-    detailItem("Jadwal Koordinasi", item.jadwal_koordinasi || "-") +
-    detailItem("Permasalahan", item.permasalahan, true) +
-    detailItem("Kronologi", item.kronologi, true) +
-    detailItem("Sudah Dilakukan", item.sudah_dilakukan, true) +
-    detailItem("Dimohon", item.dimohon, true) +
-    detailItem("Dokumen", item.dokumen, true) +
-    detailFileItem("File Pendukung", item.file_url) +
-    detailItem("Catatan Jaksa", item.catatan_jaksa || "-", true) +
-    detailItem("Tanggal Update", item.tanggal_update || "-") +
-    detailItem("Ditangani Oleh", item.ditangani_oleh || "-") +
-    detailItem("Hasil Koordinasi", item.hasil_koordinasi || "-", true) +
-    editJaksaBox(item);
-
-  detailModal.classList.add("show");
-}
 
     function closeDetailModal() {
       const detailModal = document.getElementById("detailModal");
@@ -844,173 +948,137 @@
         '</div>'
       );
     }
-function editJaksaBox(item) {
-  return (
-    '<div class="edit-box">' +
-      '<h4 class="edit-box-title">Edit Tindak Lanjut Jaksa</h4>' +
 
-      '<div class="edit-grid">' +
-        '<div class="edit-field">' +
-          '<label for="editStatus">Status Permohonan</label>' +
-          '<select id="editStatus">' +
-            statusOption("Menunggu", item.status) +
-            statusOption("Diproses", item.status) +
-            statusOption("Selesai", item.status) +
-            statusOption("Ditolak", item.status) +
-          '</select>' +
-        '</div>' +
+    function editJaksaBox(item) {
+      return (
+        '<div class="edit-box">' +
+          '<h4 class="edit-box-title">Edit Tindak Lanjut Jaksa</h4>' +
 
-        '<div class="edit-field">' +
-          '<label for="editJadwal">Jadwal Koordinasi</label>' +
-          '<input type="datetime-local" id="editJadwal" value="' + formatDatetimeLocal(item.jadwal_koordinasi) + '">' +
-        '</div>' +
+          '<div class="edit-grid">' +
+            '<div class="edit-field">' +
+              '<label for="editStatus">Status Permohonan</label>' +
+              '<select id="editStatus">' +
+                statusOption("Menunggu", item.status) +
+                statusOption("Diproses", item.status) +
+                statusOption("Selesai", item.status) +
+                statusOption("Ditolak", item.status) +
+              '</select>' +
+            '</div>' +
 
-        '<div class="edit-field full">' +
-          '<label for="editCatatan">Catatan Jaksa</label>' +
-          '<textarea id="editCatatan" placeholder="Tulis catatan jaksa...">' + escapeHtml(item.catatan_jaksa || "") + '</textarea>' +
-        '</div>' +
-      '</div>' +
+            '<div class="edit-field">' +
+              '<label for="editJadwal">Jadwal Koordinasi</label>' +
+              '<input type="datetime-local" id="editJadwal" value="' + escapeHtml(formatDatetimeLocal(item.jadwal_koordinasi)) + '">' +
+            '</div>' +
 
-      '<div class="edit-actions">' +
-        '<button type="button" class="btn-save-update" onclick="saveJaksaUpdate(\'' + escapeJs(item.id_permohonan) + '\')">' +
-          'Simpan Perubahan' +
-        '</button>' +
-      '</div>' +
-    '</div>'
-  );
-}
+            '<div class="edit-field full">' +
+              '<label for="editCatatan">Catatan Jaksa</label>' +
+              '<textarea id="editCatatan" placeholder="Tulis catatan jaksa...">' + escapeHtml(item.catatan_jaksa || "") + '</textarea>' +
+            '</div>' +
+          '</div>' +
 
-function statusOption(value, current) {
-  const selected = String(value) === String(current || "") ? "selected" : "";
-
-  return '<option value="' + escapeHtml(value) + '" ' + selected + '>' + escapeHtml(value) + '</option>';
-}
-
-function formatDatetimeLocal(value) {
-  if (!value) return "";
-
-  const text = String(value).trim();
-
-  if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(text)) {
-    return text.slice(0, 16);
-  }
-
-  return "";
-}
-function escapeJs(value) {
-  return String(value === undefined || value === null ? "" : value)
-    .replace(/\\/g, "\\\\")
-    .replace(/'/g, "\\'")
-    .replace(/"/g, '\\"')
-    .replace(/\n/g, "\\n")
-    .replace(/\r/g, "");
-}
-async function saveJaksaUpdate(idPermohonan) {
-  const sessionToken = sessionStorage.getItem("jaksaSessionToken");
-
-  if (!sessionToken) {
-    alert("Sesi login tidak ditemukan. Silakan login ulang.");
-    openLogin();
-    return;
-  }
-
-  const status = document.getElementById("editStatus")?.value || "Menunggu";
-  const catatan = document.getElementById("editCatatan")?.value || "";
-  const jadwal = document.getElementById("editJadwal")?.value || "";
-  const btn = document.querySelector(".btn-save-update");
-
-  try {
-    if (btn) {
-      btn.disabled = true;
-      btn.textContent = "Menyimpan...";
+          '<div class="edit-actions">' +
+            '<button type="button" class="btn-save-update" onclick="saveJaksaUpdate(\'' + escapeJs(item.id_permohonan) + '\')">' +
+              'Simpan Perubahan' +
+            '</button>' +
+          '</div>' +
+        '</div>'
+      );
     }
 
-    const clientToken =
-      "UPDATE-" + Date.now() + "-" + Math.random().toString(36).slice(2);
+    function statusOption(value, current) {
+      const selected = String(value) === String(current || "") ? "selected" : "";
 
-    await fetch(MONITORING_SCRIPT_URL, {
-      method: "POST",
-      mode: "no-cors",
-      headers: {
-        "Content-Type": "text/plain;charset=utf-8"
-      },
-      body: JSON.stringify({
-        action: "update_permohonan",
-        client_token: clientToken,
-        session_token: sessionToken,
-        id_permohonan: idPermohonan,
-        status: status,
-        catatan_jaksa: catatan,
-        jadwal_koordinasi: jadwal
-      })
-    });
-
-    const result = await waitMonitoringResult("update_result", clientToken);
-
-    if (result.status === "success") {
-      alert("Perubahan berhasil disimpan.");
-      closeDetailModal();
-      await loadMonitoringData();
-    } else {
-      alert(result.message || "Gagal menyimpan perubahan.");
+      return (
+        '<option value="' + escapeHtml(value) + '" ' + selected + '>' +
+          escapeHtml(value) +
+        '</option>'
+      );
     }
 
-  } catch (error) {
-    console.error(error);
-    alert("Terjadi kesalahan saat menyimpan perubahan.");
+    async function saveJaksaUpdate(idPermohonan) {
+      const sessionToken = sessionStorage.getItem("jaksaSessionToken");
 
-  } finally {
-    if (btn) {
-      btn.disabled = false;
-      btn.textContent = "Simpan Perubahan";
+      if (!sessionToken) {
+        alert("Sesi login tidak ditemukan. Silakan login ulang.");
+        openLogin();
+        return;
+      }
+
+      const status = document.getElementById("editStatus")?.value || "Menunggu";
+      const catatan = document.getElementById("editCatatan")?.value || "";
+      const jadwal = document.getElementById("editJadwal")?.value || "";
+      const btn = document.querySelector(".btn-save-update");
+
+      try {
+        if (btn) {
+          btn.disabled = true;
+          btn.textContent = "Menyimpan...";
+        }
+
+        const clientToken =
+          "UPDATE-" + Date.now() + "-" + Math.random().toString(36).slice(2);
+
+        await fetch(MONITORING_SCRIPT_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: {
+            "Content-Type": "text/plain;charset=utf-8"
+          },
+          body: JSON.stringify({
+            action: "update_permohonan",
+            client_token: clientToken,
+            session_token: sessionToken,
+            id_permohonan: idPermohonan,
+            status: status,
+            catatan_jaksa: catatan,
+            jadwal_koordinasi: jadwal
+          })
+        });
+
+        const result = await waitMonitoringResult("update_result", clientToken);
+
+        if (result.status === "success") {
+          alert("Perubahan berhasil disimpan.");
+          closeDetailModal();
+          await loadMonitoringData();
+        } else {
+          alert(result.message || "Gagal menyimpan perubahan.");
+        }
+
+      } catch (error) {
+        console.error(error);
+        alert("Terjadi kesalahan saat menyimpan perubahan.");
+
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = "Simpan Perubahan";
+        }
+      }
     }
-  }
-}
 
-async function waitMonitoringResult(action, clientToken) {
-  for (let i = 0; i < 8; i++) {
-    await monitoringDelay(i === 0 ? 500 : 1000);
+    async function waitMonitoringResult(action, clientToken) {
+      for (let i = 0; i < 8; i++) {
+        await monitoringDelay(i === 0 ? 500 : 1000);
 
-    const url =
-      MONITORING_SCRIPT_URL +
-      "?action=" +
-      encodeURIComponent(action) +
-      "&client_token=" +
-      encodeURIComponent(clientToken);
+        const url =
+          MONITORING_SCRIPT_URL +
+          "?action=" +
+          encodeURIComponent(action) +
+          "&client_token=" +
+          encodeURIComponent(clientToken);
 
-    const result = await monitoringJsonpRequest(url);
+        const result = await monitoringJsonpRequest(url);
 
-    if (result.status === "success" || result.status === "error") {
-      return result;
-    }
-  }
+        if (result.status === "success" || result.status === "error") {
+          return result;
+        }
+      }
 
-  return {
-    status: "pending",
-    message: "Data masih diproses."
-  };
-}
-
-function monitoringDelay(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-function escapeJs(value) {
-  return String(value === undefined || value === null ? "" : value)
-    .replace(/\\/g, "\\\\")
-    .replace(/'/g, "\\'")
-    .replace(/"/g, '\\"')
-    .replace(/\n/g, "\\n")
-    .replace(/\r/g, "");
-}
-    function getStatusClass(status) {
-      const value = String(status || "").toLowerCase();
-
-      if (value.includes("selesai")) return "status-selesai";
-      if (value.includes("proses")) return "status-diproses";
-      if (value.includes("tolak")) return "status-ditolak";
-
-      return "status-menunggu";
+      return {
+        status: "pending",
+        message: "Data masih diproses."
+      };
     }
 
     function monitoringJsonpRequest(url, timeout) {
@@ -1052,6 +1120,57 @@ function escapeJs(value) {
       });
     }
 
+    function monitoringDelay(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    function getStatusClass(status) {
+      const value = String(status || "").toLowerCase();
+
+      if (value.includes("selesai")) return "status-selesai";
+      if (value.includes("proses")) return "status-diproses";
+      if (value.includes("tolak")) return "status-ditolak";
+
+      return "status-menunggu";
+    }
+
+    function formatDatetimeLocal(value) {
+      if (!value) return "";
+
+      const text = String(value).trim();
+
+      if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(text)) {
+        return text.slice(0, 16);
+      }
+
+      return "";
+    }
+
+    function formatJadwalDisplay(value) {
+      if (!value) return "";
+
+      const text = String(value).trim();
+
+      if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(text)) {
+        const datePart = text.slice(0, 10);
+        const timePart = text.slice(11, 16);
+        const parts = datePart.split("-");
+
+        return parts[2] + "/" + parts[1] + "/" + parts[0] + " " + timePart;
+      }
+
+      return text;
+    }
+
+    function escapeJs(value) {
+      return String(value === undefined || value === null ? "" : value)
+        .replace(/\\/g, "\\\\")
+        .replace(/'/g, "\\'")
+        .replace(/"/g, '\\"')
+        .replace(/\n/g, "\\n")
+        .replace(/\r/g, "");
+    }
+
     function escapeHtml(value) {
       return String(value === undefined || value === null ? "" : value)
         .replace(/&/g, "&amp;")
@@ -1059,6 +1178,41 @@ function escapeJs(value) {
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
+    }
+
+    function initParticles() {
+      if (typeof particlesJS === "undefined") return;
+
+      particlesJS("particles-js", {
+        particles: {
+          number: { value: 45, density: { enable: true, value_area: 900 } },
+          color: { value: ["#c9a24b", "#7b1113"] },
+          shape: { type: "circle" },
+          opacity: { value: 0.45, random: true },
+          size: { value: 3.3, random: true },
+          line_linked: {
+            enable: true,
+            distance: 150,
+            color: "#c9a24b",
+            opacity: 0.32,
+            width: 1
+          },
+          move: { enable: true, speed: 1.6, out_mode: "out" }
+        },
+        interactivity: {
+          detect_on: "canvas",
+          events: {
+            onhover: { enable: true, mode: "grab" },
+            onclick: { enable: true, mode: "push" },
+            resize: true
+          },
+          modes: {
+            grab: { distance: 160, line_linked: { opacity: 0.55 } },
+            push: { particles_nb: 3 }
+          }
+        },
+        retina_detect: true
+      });
     }
   </script>
 </body>
