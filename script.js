@@ -81,17 +81,69 @@ function clearFormErrors() {
 }
 function validateForm(data) {
   clearFormErrors();
-  let isValid = true;
-  const errors = {};
 
-  if (!data["nama_tersangka"]) {
+  let isValid = true;
+  const errorList = [];
+
+  function addError(name, message) {
     isValid = false;
-    errors["nama_tersangka"] = "Nama Tersangka wajib diisi.";
+    errorList.push(message);
+
+    const input = document.querySelector(`[name="${name}"]`);
+    if (input) {
+      const fieldset = input.closest("fieldset");
+      const target = fieldset || input.parentElement;
+
+      const errorEl = document.createElement("small");
+      errorEl.textContent = message;
+      errorEl.style.color = "#ff6b6b";
+      errorEl.style.display = "block";
+      errorEl.style.marginTop = "8px";
+      errorEl.classList.add("error-msg");
+
+      target.appendChild(errorEl);
+    }
   }
-  if (!data["nomor_hp"]) {
+
+  if (!data.nomor_lp) addError("nomor_lp", "Nomor Laporan Polisi wajib diisi.");
+  if (!data.nomor_spdp) addError("nomor_spdp", "Nomor SPDP wajib diisi.");
+  if (!data.nama_tersangka) addError("nama_tersangka", "Nama Tersangka wajib diisi.");
+  if (!data.pasal) addError("pasal", "Pasal yang disangkakan wajib diisi.");
+  if (!data.jaksa_peneliti) addError("jaksa_peneliti", "Jaksa Peneliti wajib diisi.");
+
+  if (!data.jenis_koordinasi) addError("jenis_koordinasi", "Jenis koordinasi wajib dipilih.");
+  if (!data.urgensi) addError("urgensi", "Tingkat urgensi wajib dipilih.");
+  if (!data.permasalahan) addError("permasalahan[]", "Permasalahan wajib diisi.");
+  if (!data.kronologi) addError("kronologi", "Kronologi singkat wajib diisi.");
+  if (!data.sudah_dilakukan) addError("sudah_dilakukan[]", "Minimal satu bagian yang sudah dilakukan wajib dipilih.");
+  if (!data.dimohon) addError("dimohon[]", "Minimal satu permohonan kepada Jaksa wajib dipilih.");
+  if (!data.dokumen) addError("dokumen[]", "Minimal satu dokumen pendukung wajib dipilih.");
+  if (!data.cara_koordinasi) addError("cara_koordinasi", "Cara koordinasi wajib dipilih.");
+  if (!data.nomor_hp) addError("nomor_hp", "Nomor HP Penyidik wajib diisi.");
+
+  const fileInput = document.getElementById("fileUpload");
+  if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
     isValid = false;
-    errors["nomor_hp"] = "Nomor HP wajib diisi.";
+    errorList.push("File pendukung wajib diupload.");
+
+    const uploadBox = document.querySelector(".upload-box");
+    if (uploadBox) {
+      const errorEl = document.createElement("small");
+      errorEl.textContent = "File pendukung wajib diupload.";
+      errorEl.style.color = "#ff6b6b";
+      errorEl.style.display = "block";
+      errorEl.style.marginTop = "8px";
+      errorEl.classList.add("error-msg");
+      uploadBox.appendChild(errorEl);
+    }
   }
+
+  if (!isValid) {
+    alert("Form belum lengkap. Mohon isi semua bagian terlebih dahulu.");
+  }
+
+  return isValid;
+}
 
   Object.keys(errors).forEach((key) => {
     const input = document.querySelector(`[name="${key}"]`);
@@ -148,7 +200,29 @@ function checkFileSize(input) {
     }
   }
 }
+function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
 
+    reader.onload = () => {
+      const result = reader.result;
+      const base64 = result.split(",")[1];
+
+      resolve({
+        name: file.name,
+        mimeType: file.type,
+        size: file.size,
+        base64: base64
+      });
+    };
+
+    reader.onerror = () => {
+      reject(new Error("Gagal membaca file."));
+    };
+
+    reader.readAsDataURL(file);
+  });
+}
 /* 9. Filter tabel monitoring */
 function filterTable() {
   const searchBox = document.getElementById("searchBox");
