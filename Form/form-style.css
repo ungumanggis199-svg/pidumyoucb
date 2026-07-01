@@ -1,26 +1,37 @@
 /* ===== FORM STYLE KHUSUS ===== */
 
+:root {
+  --maroon: #7b1113;
+  --gold: #c9a24b;
+  --white: #ffffff;
+  --text-dark: #2b2b2b;
+  --text-muted: #555555;
+  --border-color: #c9a24b;
+  --background-light: #fff8e1;
+}
+
 body {
-  background: #f9f9f9;
-  color: #333;
+  background-color: #f9f9f9;
+  color: var(--text-dark);
   font-family: 'Poppins', sans-serif;
   padding: 40px 20px;
+  margin: 0;
 }
 
 /* Container form */
 .form-box {
-  background: #fff;
+  background-color: var(--white);
   max-width: 900px;
   margin: 0 auto 60px auto;
   padding: 30px 40px;
   border-radius: 12px;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
 }
 
 /* Section header */
 .section-header h2 {
   font-size: 2.8rem;
-  color: #7b1113; /* maroon */
+  color: var(--maroon);
   font-weight: 700;
   margin-bottom: 12px;
   text-align: center;
@@ -28,23 +39,23 @@ body {
 .divider {
   width: 100px;
   height: 5px;
-  background: #c9a24b; /* gold */
+  background: var(--gold);
   margin: 0 auto 40px auto;
   border-radius: 4px;
 }
 
 /* Fieldset styling */
 fieldset {
-  border: 1px solid #e0c97a;
+  border: 1px solid var(--border-color);
   border-radius: 10px;
   padding: 25px 30px;
   margin-bottom: 30px;
-  background: #fff8e1;
+  background-color: var(--background-light);
 }
 legend {
   font-weight: 600;
   font-size: 1.2rem;
-  color: #7b1113;
+  color: var(--maroon);
   padding: 0 10px;
 }
 
@@ -69,13 +80,13 @@ legend {
 .input-group label {
   font-weight: 600;
   margin-bottom: 6px;
-  color: #5a0c0e;
+  color: var(--maroon);
 }
 .input-group input[type="text"],
 .input-group input[type="tel"],
 .input-group textarea {
   padding: 12px 15px;
-  border: 1.5px solid #c9a24b;
+  border: 1.5px solid var(--border-color);
   border-radius: 8px;
   font-size: 1rem;
   transition: border-color 0.3s ease;
@@ -85,8 +96,8 @@ legend {
 .input-group input[type="tel"]:focus,
 .input-group textarea:focus {
   outline: none;
-  border-color: #7b1113;
-  box-shadow: 0 0 8px rgba(123,17,19,0.3);
+  border-color: var(--maroon);
+  box-shadow: 0 0 8px rgba(123, 17, 19, 0.3);
 }
 
 /* Checklist (radio & checkbox) */
@@ -98,13 +109,13 @@ legend {
 .checklist label {
   cursor: pointer;
   font-size: 1rem;
-  color: #4a2a1a;
+  color: var(--text-dark);
   user-select: none;
 }
 .checklist input[type="radio"],
 .checklist input[type="checkbox"] {
   margin-right: 10px;
-  accent-color: #7b1113;
+  accent-color: var(--maroon);
 }
 
 /* Poin permasalahan */
@@ -117,8 +128,8 @@ legend {
   flex: 1;
 }
 .btn-remove {
-  background: #7b1113;
-  color: #fff;
+  background: var(--maroon);
+  color: var(--white);
   border: none;
   border-radius: 6px;
   width: 36px;
@@ -131,8 +142,8 @@ legend {
 }
 .btn-add {
   background: transparent;
-  border: 2px dashed #c9a24b;
-  color: #7b1113;
+  border: 2px dashed var(--gold);
+  color: var(--maroon);
   padding: 10px 18px;
   border-radius: 8px;
   font-weight: 600;
@@ -149,11 +160,11 @@ legend {
 .upload-box {
   margin-top: 20px;
   padding: 18px;
-  border: 2px dashed #c9a24b;
+  border: 2px dashed var(--gold);
   border-radius: 10px;
   text-align: left;
   font-size: 0.95rem;
-  color: #5a0c0e;
+  color: var(--maroon);
 }
 .upload-box label {
   font-weight: 600;
@@ -168,14 +179,14 @@ legend {
 .btn-submit {
   width: 100%;
   padding: 16px;
-  background: linear-gradient(135deg, #7b1113, #5a0c0e);
-  color: #fff;
+  background: linear-gradient(135deg, var(--maroon), #5a0c0e);
+  color: var(--white);
   font-weight: 700;
   font-size: 1.2rem;
   border: none;
   border-radius: 12px;
   cursor: pointer;
-  box-shadow: 0 6px 20px rgba(123,17,19,0.4);
+  box-shadow: 0 6px 20px rgba(123, 17, 19, 0.4);
   transition: background-color 0.3s ease, transform 0.3s ease;
   margin-top: 30px;
 }
