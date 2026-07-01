@@ -396,12 +396,26 @@ body {
     font-size: 0.9rem;
   }
 }
+.footer {
+  background: linear-gradient(135deg, #7b1113, #5a0c0e);
+  color: #fff;
+  text-align: center;
+  padding: 40px 20px;
+}
+
 .footer-logo {
   height: 60px;
-  width: auto;
   max-width: 60px;
+  width: auto;
   object-fit: contain;
   display: block;
   margin: 0 auto 14px auto;
 }
+
+.footer p {
+  font-size: 0.9rem;
+  margin: 3px 0;
+  opacity: 0.9;
+}
+
 
