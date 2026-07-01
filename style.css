@@ -420,28 +420,32 @@ body {
 
 /* ===== MODAL LOGIN ===== */
 .modal {
-  display: none; /* Modal tersembunyi secara default */
+  display: none; /* default tersembunyi */
   position: fixed;
-  inset: 0; /* shorthand untuk top: 0; right: 0; bottom: 0; left: 0 */
-  background: rgba(0, 0, 0, 0.55); /* Overlay gelap semi-transparan */
+  inset: 0; /* top:0; right:0; bottom:0; left:0 */
+  background: rgba(0, 0, 0, 0.55);
   justify-content: center;
   align-items: center;
-  z-index: 200; /* Pastikan modal berada di atas elemen lain */
+  z-index: 200;
+  padding: 20px; /* beri padding agar modal tidak menempel tepi layar */
+  overflow-y: auto; /* agar bisa scroll jika konten tinggi */
 }
 
 .modal.show {
-  display: flex; /* Tampilkan modal dengan flexbox */
+  display: flex;
 }
 
 .modal-box {
   background: #fff;
-  padding: 36px 30px;
   border-radius: 16px;
-  width: 90%;
-  max-width: 380px; /* Batas lebar modal */
-  text-align: center;
-  position: relative;
+  max-width: 400px;
+  width: 100%; /* agar responsif */
+  max-height: 90vh; /* batasi tinggi agar tidak melebihi layar */
+  overflow-y: auto; /* scroll dalam modal jika konten panjang */
+  padding: 30px 25px;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  position: relative;
+}8px 30px rgba(0, 0, 0, 0.2);
 }
 
 .modal-close {
