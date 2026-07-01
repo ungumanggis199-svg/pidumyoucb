@@ -110,6 +110,7 @@ function addPoin() {
     `<button type="button" class="btn-remove" onclick="removePoin(this)">&times;</button>`;
   wrap.appendChild(row);
 }
+
 function removePoin(btn) {
   const wrap = document.getElementById("permasalahanWrap");
   if (!wrap) return;
@@ -120,11 +121,13 @@ function removePoin(btn) {
     alert("Minimal harus ada satu poin permasalahan.");
   }
 }
+
 function renumberPoin() {
   document.querySelectorAll("#permasalahanWrap .poin-row input").forEach((inp, i) => {
     inp.placeholder = `${i + 1}. Tuliskan permasalahan...`;
   });
 }
+
 
 /* 8. Validasi ukuran file upload (maks 10MB) */
 function checkFileSize(input) {
