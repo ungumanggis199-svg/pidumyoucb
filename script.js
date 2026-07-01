@@ -4,7 +4,7 @@
    ============================================================ */
 
 // Ganti dengan URL Web App Google Apps Script Anda (deploy sebagai Web App)
-const GOOGLE_SCRIPT_URL = "GANTI_DENGAN_URL_APPS_SCRIPT_ANDA";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwZhzBasdie7UqEmTrLucc4NrwkHexypNxwW4To4yUYGOOov51vkqenUSGlsiMUZgIK/exec";
 
 // Status login jaksa (disimpan di sessionStorage)
 let isJaksaLoggedIn = sessionStorage.getItem("isJaksaLoggedIn") === "true";
@@ -286,15 +286,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Kirim ke Google Apps Script Web App
         await fetch(GOOGLE_SCRIPT_URL, {
-          method: "POST",
-          mode: "no-cors",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data)
-        });
-
-        alert("Permohonan berhasil dikirim!\nID Anda: " + data["id_permohonan"]);
-        this.reset();
-
+  method: "POST",
+  mode: "no-cors",
+  headers: {
+    "Content-Type": "text/plain;charset=utf-8"
+  },
+  body: JSON.stringify(data)
+});
         // Reset poin permasalahan ke satu baris
         const wrap = document.getElementById("permasalahanWrap");
         if (wrap) {
