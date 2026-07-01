@@ -287,3 +287,37 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+/* ============================================================
+   PARTIKEL INTERAKTIF (particles.js) — opsional
+   ============================================================ */
+document.addEventListener("DOMContentLoaded", () => {
+  if (typeof particlesJS !== "undefined") {
+    particlesJS("particles-js", {
+      particles: {
+        number: { value: 45, density: { enable: true, value_area: 900 } },
+        color: { value: ["#c9a24b", "#7b1113"] },
+        shape: { type: "circle" },
+        opacity: { value: 0.5, random: true },
+        size: { value: 3.5, random: true },
+        line_linked: {
+          enable: true, distance: 150,
+          color: "#c9a24b", opacity: 0.35, width: 1
+        },
+        move: { enable: true, speed: 1.8, out_mode: "out" }
+      },
+      interactivity: {
+        detect_on: "canvas",
+        events: {
+          onhover: { enable: true, mode: "grab" },
+          onclick: { enable: true, mode: "push" },
+          resize: true
+        },
+        modes: {
+          grab: { distance: 160, line_linked: { opacity: 0.6 } },
+          push: { particles_nb: 3 }
+        }
+      },
+      retina_detect: true
+    });
+  }
+});
