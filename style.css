@@ -516,15 +516,13 @@ body {
 .modal-logo {
   height: 70px;
   margin-bottom: 12px;
-  justify-content: center;
-  align-items: center;
+  padding: 10px 14px;
 }
 
 .modal-box h3 {
   color: var(--maroon);
   margin-bottom: 20px;
-  justify-content: center;
-  align-items: center;
+  padding: 10px 14px;
 }
 
 .modal-box .input-group {
@@ -577,10 +575,14 @@ body {
     width: 95%;
     max-width: 320px;
     padding: 24px 20px;
+    justify-content: center;
+  align-items: center;
   }
 
   .modal-box h3 {
     font-size: 1.2rem;
+    justify-content: center;
+  align-items: center;
   }
 
   .modal-box .btn-submit {
