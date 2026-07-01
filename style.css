@@ -396,4 +396,12 @@ body {
     font-size: 0.9rem;
   }
 }
+.footer-logo {
+  height: 60px;
+  width: auto;
+  max-width: 60px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto 14px auto;
+}
 
