@@ -664,3 +664,23 @@ footer {
   backdrop-filter: blur(6px);
   border-radius: 18px;
 }
+.info-box {
+  padding: 16px 18px;
+  margin: 14px 0 22px;
+  border-left: 5px solid #c9a24b;
+  background: rgba(201, 162, 75, 0.12);
+  border-radius: 12px;
+}
+
+.info-box strong {
+  display: block;
+  margin-bottom: 6px;
+  color: #7b1113;
+  font-size: 1rem;
+}
+
+.info-box p {
+  margin: 0;
+  color: #444;
+  line-height: 1.6;
+}
