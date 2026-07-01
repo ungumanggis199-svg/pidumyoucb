@@ -9,10 +9,10 @@
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-body { background: var(--white); color: var(--text); scroll-behavior: smooth; }
 html { scroll-behavior: smooth; }
+body { background: var(--white); color: var(--text); }
 
-/* NAVBAR */
+/* ===== NAVBAR ===== */
 .navbar {
   position: sticky; top: 0; z-index: 100;
   display: flex; justify-content: space-between; align-items: center;
@@ -21,17 +21,8 @@ html { scroll-behavior: smooth; }
   box-shadow: 0 2px 15px rgba(123,17,19,0.12);
   backdrop-filter: blur(8px);
 }
-.nav-brand {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  overflow: visible;   /* penting! */
-}
-.logo {
-  height: 52px;
-  width: auto;
-  object-fit: contain;   /* pastikan gambar tampil utuh */
-  display: block;}
+.nav-brand { display: flex; align-items: center; gap: 14px; overflow: visible; }
+.logo { height: 52px; width: auto; object-fit: contain; display: block; }
 .brand-text h1 { color: var(--maroon); font-size: 1.4rem; letter-spacing: 1px; }
 .brand-text span { font-size: 0.72rem; color: var(--gold); font-weight: 500; }
 .nav-links { display: flex; align-items: center; gap: 26px; }
@@ -49,169 +40,28 @@ html { scroll-behavior: smooth; }
 .burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
 .burger span { width: 26px; height: 3px; background: var(--maroon); border-radius: 3px; }
 
-/* HERO */
-/* HERO dengan background gedung kejaksaan */
-/* HERO dengan background Gedung Kejaksaan Negeri Muna */
-/* HERO utama */
+/* ===== HERO ===== */
 .hero {
-  position: relative;
-  min-height: 90vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+  position: relative; min-height: 90vh;
+  display: flex; align-items: center; justify-content: center; text-align: center;
   overflow: hidden;
   background: linear-gradient(135deg, #fff 0%, #fdf6ec 55%, #fbeaea 100%);
 }
-
-/* Layer gambar gedung yang beranimasi zoom lembut */
 .hero-bg {
-  position: absolute;
-  inset: 0;
+  position: absolute; inset: 0; z-index: 0;
   background:
-    linear-gradient(
-      135deg,
-      rgba(255,255,255,0.88) 0%,
-      rgba(253,246,236,0.82) 55%,
-      rgba(251,234,234,0.80) 100%
-    ),
+    linear-gradient(135deg, rgba(255,255,255,0.88) 0%, rgba(253,246,236,0.82) 55%, rgba(251,234,234,0.80) 100%),
     url('https://raw.githubusercontent.com/ungumanggis199-svg/pidumyoucb/main/Background%20Gedung%20kn%20Muna.png')
       center/cover no-repeat;
-  z-index: 0;
   animation: slowZoom 20s ease-in-out infinite alternate;
 }
-
 @keyframes slowZoom {
-  0%   { transform: scale(1);    }
+  0%   { transform: scale(1); }
   100% { transform: scale(1.12); }
 }
+#particles-js { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
 
-/* Pastikan konten hero di atas overlay */
-.hero-content { position: relative; z-index: 2; }
-
-
-.hero-content { z-index: 2; max-width: 720px; padding: 40px 20px; animation: fadeUp 1s ease; }
-.hero-logo {
-  height: 120px;
-  width: auto;
-  object-fit: contain;
-  display: block;
-  margin: 0 auto 20px auto;}
-  animation: float 4s ease-in-out infinite;
-.hero-content h2 { font-size: 2.6rem; color: var(--maroon); font-weight: 700; }
-.hero-content h3 { font-size: 1.3rem; color: var(--gold); margin-bottom: 18px; }
-.hero-content p { color: #555; font-size: 1.05rem; line-height: 1.7; margin-bottom: 30px; }
-.hero-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-.btn-primary, .btn-secondary {
-  padding: 14px 32px; border-radius: 30px; text-decoration: none;
-  font-weight: 600; transition: 0.3s;
-}
-.btn-primary { background: linear-gradient(135deg, var(--maroon), var(--maroon-dark)); color: #fff; box-shadow: 0 6px 20px rgba(123,17,19,0.35); }
-.btn-primary:hover { transform: translateY(-3px); }
-.btn-secondary { background: transparent; color: var(--maroon); border: 2px solid var(--gold); }
-.btn-secondary:hover { background: var(--gold); color: #fff; }
-
-/* Animated shapes */
-.hero-shape {
-  position: absolute; width: 480px; height: 480px;
-  background: radial-gradient(circle, rgba(201,162,75,0.25), transparent 70%);
-  border-radius: 50%; top: -120px; right: -120px;
-  animation: pulse 6s ease-in-out infinite;
-}
-.hero-overlay {
-  position: absolute; width: 380px; height: 380px;
-  background: radial-gradient(circle, rgba(123,17,19,0.12), transparent 70%);
-  border-radius: 50%; bottom: -100px; left: -100px;
-  animation: pulse 8s ease-in-out infinite;
-}
-
-@keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-15px);} }
-@keyframes pulse { 0%,100%{transform:scale(1);opacity:0.8;} 50%{transform:scale(1.2
-/* Modal show state */
-.modal { display: none; position: fixed; inset: 0; z-index: 200;
-  background: rgba(0,0,0,0.55); justify-content: center; align-items: center; }
-.modal.show { display: flex; animation: fadeIn 0.3s ease; }
-
-/* Menu mobile open */
-@media (max-width: 860px) {
-  .nav-links { position: absolute; top: 70px; right: 0; flex-direction: column;
-    background: #fff; width: 240px; padding: 20px; gap: 16px;
-    box-shadow: -4px 4px 20px rgba(0,0,0,0.1); transform: translateX(110%);
-    transition: 0.35s; }
-  .nav-links.open { transform: translateX(0); }
-  .burger { display: flex; }
-}
-
-/* Blur data tersangka */
-.blur-data { filter: blur(5px); user-select: none; transition: filter 0.4s ease; }
-.blur-data.unblurred { filter: none; user-select: auto; }
-
-@keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
-@media (max-width: 768px) {
-  .hero {
-    background-attachment: scroll;   /* nonaktifkan parallax di mobile */
-    background-position: center;
-  }
-}
-
-/* ORB melayang dinamis */
-.orb {
-  position: absolute;
-  border-radius: 50%;
-  z-index: 1;
-  filter: blur(2px);
-  opacity: 0.55;
-  pointer-events: none;
-}
-.orb-1 {
-  width: 120px; height: 120px;
-  background: radial-gradient(circle, rgba(201,162,75,0.7), transparent 70%);
-  top: 15%; left: 10%;
-  animation: floatOrb 9s ease-in-out infinite;
-}
-.orb-2 {
-  width: 80px; height: 80px;
-  background: radial-gradient(circle, rgba(123,17,19,0.5), transparent 70%);
-  top: 60%; left: 18%;
-  animation: floatOrb 11s ease-in-out infinite reverse;
-}
-.orb-3 {
-  width: 150px; height: 150px;
-  background: radial-gradient(circle, rgba(230,201,118,0.6), transparent 70%);
-  top: 25%; right: 12%;
-  animation: floatOrb 13s ease-in-out infinite;
-}
-.orb-4 {
-  width: 90px; height: 90px;
-  background: radial-gradient(circle, rgba(201,162,75,0.5), transparent 70%);
-  bottom: 15%; right: 20%;
-  animation: floatOrb 10s ease-in-out infinite reverse;
-}
-#particles-js {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-}
-
-
-@keyframes floatOrb {
-  0%   { transform: translate(0, 0)      scale(1);   }
-  33%  { transform: translate(30px, -40px) scale(1.1); }
-  66%  { transform: translate(-25px, 25px) scale(0.95);}
-  100% { transform: translate(0, 0)      scale(1);   }
-}
-
-/* Pastikan konten & garis emas di atas ornamen */
-.hero-content { position: relative; z-index: 3; }
-.hero::after { z-index: 4; }
-/* Hormati pengguna yang meminta pengurangan gerak */
-@media (prefers-reduced-motion: reduce) {
-  .hero-bg, .orb { animation: none !important; }
-}
-
-/* Kurangi jumlah orb di layar kecil agar tetap ringan */
-@media (max-width: 600px) {
-  .orb-3, .orb-4 { display: none; }
-}
-
+.hero-content {
+  position: relative; z-index: 3;
+  max-width: 720px; padding: 40px 20px;
+  animation: fadeUp 1s 
