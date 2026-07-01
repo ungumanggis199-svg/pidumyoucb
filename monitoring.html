@@ -292,8 +292,81 @@
 
       .detail-grid {
         grid-template-columns: 1fr;
-      }
-    }
+.monitor-note {
+  max-width: 240px;
+  white-space: normal;
+  line-height: 1.5;
+}
+
+.edit-box {
+  grid-column: 1 / -1;
+  margin-top: 12px;
+  padding: 18px;
+  border-radius: 14px;
+  background: rgba(201, 162, 75, 0.12);
+  border: 1px solid rgba(201, 162, 75, 0.45);
+}
+
+.edit-box h4 {
+  color: #7b1113;
+  margin-bottom: 14px;
+  font-size: 1.05rem;
+}
+
+.edit-grid {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 14px;
+}
+
+.edit-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  color: #541014;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.edit-grid select,
+.edit-grid input,
+.edit-grid textarea {
+  width: 100%;
+  min-height: 46px;
+  padding: 11px 13px;
+  border: 1.5px solid #c9a24b;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  outline: none;
+}
+
+.edit-grid textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.btn-save-update {
+  margin-top: 14px;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 18px;
+  background: linear-gradient(135deg, #7b1113, #5a0c0e);
+  color: #fff;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.btn-save-update:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+@media (max-width: 720px) {
+  .edit-grid {
+    grid-template-columns: 1fr;
+  }
+}
   </style>
 </head>
 
@@ -550,6 +623,8 @@
             '<td>' + escapeHtml(item.jenis_koordinasi || "-") + '</td>' +
             '<td>' + escapeHtml(item.urgensi || "-") + '</td>' +
             '<td><span class="status-badge ' + statusClass + '">' + escapeHtml(item.status || "Menunggu") + '</span></td>' +
+            '<td class="monitor-note">' + escapeHtml(item.catatan_jaksa || "-") + '</td>' +
+            '<td>' + escapeHtml(item.jadwal_koordinasi || "-") + '</td>' +
             '<td><button type="button" class="btn-detail" onclick="openDetailPermohonan(' + index + ')">Lihat Detail</button></td>' +
           '</tr>'
         );
@@ -574,63 +649,65 @@
     }
 
     function openDetailPermohonan(index) {
-      const isLoggedIn = sessionStorage.getItem("isJaksaLoggedIn") === "true";
-      const warning = document.getElementById("accessWarning");
+  const isLoggedIn = sessionStorage.getItem("isJaksaLoggedIn") === "true";
+  const warning = document.getElementById("accessWarning");
 
-      if (!isLoggedIn) {
-        if (warning) {
-          warning.classList.add("show");
-          warning.scrollIntoView({ behavior: "smooth", block: "center" });
+  if (!isLoggedIn) {
+    if (warning) {
+      warning.classList.add("show");
+      warning.scrollIntoView({ behavior: "smooth", block: "center" });
 
-          setTimeout(function () {
-            warning.classList.remove("show");
-          }, 4500);
-        }
-
-        if (typeof openLogin === "function") {
-          openLogin();
-        }
-
-        return;
-      }
-
-      const item = filteredMonitoringData[index];
-
-      if (!item) return;
-
-      const detailContent = document.getElementById("detailContent");
-      const detailModal = document.getElementById("detailModal");
-
-      if (!detailContent || !detailModal) return;
-
-      detailContent.innerHTML =
-        detailItem("ID Permohonan", item.id_permohonan) +
-        detailItem("Timestamp", item.timestamp) +
-        detailItem("Nama Penyidik", item.nama_penyidik) +
-        detailItem("Nama Satuan", item.nama_satuan) +
-        detailItem("Nomor LP", item.nomor_lp) +
-        detailItem("Nomor SPDP", item.nomor_spdp) +
-        detailItem("Nama Tersangka", item.nama_tersangka) +
-        detailItem("Pasal", item.pasal) +
-        detailItem("Jaksa Peneliti", item.jaksa_peneliti) +
-        detailItem("Jenis Koordinasi", item.jenis_koordinasi) +
-        detailItem("Urgensi", item.urgensi) +
-        detailItem("Cara Koordinasi", item.cara_koordinasi) +
-        detailItem("Nomor HP", item.nomor_hp) +
-        detailItem("Status", item.status) +
-        detailItem("Permasalahan", item.permasalahan, true) +
-        detailItem("Kronologi", item.kronologi, true) +
-        detailItem("Sudah Dilakukan", item.sudah_dilakukan, true) +
-        detailItem("Dimohon", item.dimohon, true) +
-        detailItem("Dokumen", item.dokumen, true) +
-        detailFileItem("File Pendukung", item.file_url) +
-        detailItem("Catatan Jaksa", item.catatan_jaksa || "-", true) +
-        detailItem("Tanggal Update", item.tanggal_update || "-") +
-        detailItem("Ditangani Oleh", item.ditangani_oleh || "-") +
-        detailItem("Hasil Koordinasi", item.hasil_koordinasi || "-", true);
-
-      detailModal.classList.add("show");
+      setTimeout(function () {
+        warning.classList.remove("show");
+      }, 4500);
     }
+
+    if (typeof openLogin === "function") {
+      openLogin();
+    }
+
+    return;
+  }
+
+  const item = filteredMonitoringData[index];
+
+  if (!item) return;
+
+  const detailContent = document.getElementById("detailContent");
+  const detailModal = document.getElementById("detailModal");
+
+  if (!detailContent || !detailModal) return;
+
+  detailContent.innerHTML =
+    detailItem("ID Permohonan", item.id_permohonan) +
+    detailItem("Timestamp", item.timestamp) +
+    detailItem("Nama Penyidik", item.nama_penyidik) +
+    detailItem("Nama Satuan", item.nama_satuan) +
+    detailItem("Nomor LP", item.nomor_lp) +
+    detailItem("Nomor SPDP", item.nomor_spdp) +
+    detailItem("Nama Tersangka", item.nama_tersangka) +
+    detailItem("Pasal", item.pasal) +
+    detailItem("Jaksa Peneliti", item.jaksa_peneliti) +
+    detailItem("Jenis Koordinasi", item.jenis_koordinasi) +
+    detailItem("Urgensi", item.urgensi) +
+    detailItem("Cara Koordinasi", item.cara_koordinasi) +
+    detailItem("Nomor HP", item.nomor_hp) +
+    detailItem("Status", item.status) +
+    detailItem("Jadwal Koordinasi", item.jadwal_koordinasi || "-") +
+    detailItem("Permasalahan", item.permasalahan, true) +
+    detailItem("Kronologi", item.kronologi, true) +
+    detailItem("Sudah Dilakukan", item.sudah_dilakukan, true) +
+    detailItem("Dimohon", item.dimohon, true) +
+    detailItem("Dokumen", item.dokumen, true) +
+    detailFileItem("File Pendukung", item.file_url) +
+    detailItem("Catatan Jaksa", item.catatan_jaksa || "-", true) +
+    detailItem("Tanggal Update", item.tanggal_update || "-") +
+    detailItem("Ditangani Oleh", item.ditangani_oleh || "-") +
+    detailItem("Hasil Koordinasi", item.hasil_koordinasi || "-", true) +
+    editJaksaBox(item);
+
+  detailModal.classList.add("show");
+}
 
     function closeDetailModal() {
       const detailModal = document.getElementById("detailModal");
@@ -661,7 +738,153 @@
         '</div>'
       );
     }
+function editJaksaBox(item) {
+  return (
+    '<div class="edit-box">' +
+      '<h4>Edit Tindak Lanjut Jaksa</h4>' +
 
+      '<div class="edit-grid">' +
+        '<label>Status Permohonan' +
+          '<select id="editStatus">' +
+            statusOption("Menunggu", item.status) +
+            statusOption("Diproses", item.status) +
+            statusOption("Selesai", item.status) +
+            statusOption("Ditolak", item.status) +
+          '</select>' +
+        '</label>' +
+
+        '<label>Jadwal Koordinasi' +
+          '<input type="datetime-local" id="editJadwal" value="' + formatDatetimeLocal(item.jadwal_koordinasi) + '">' +
+        '</label>' +
+
+        '<label style="grid-column: 1 / -1;">Catatan Jaksa' +
+          '<textarea id="editCatatan" placeholder="Tulis catatan jaksa...">' + escapeHtml(item.catatan_jaksa || "") + '</textarea>' +
+        '</label>' +
+      '</div>' +
+
+      '<button type="button" class="btn-save-update" onclick="saveJaksaUpdate(\'' + escapeJs(item.id_permohonan) + '\')">' +
+        'Simpan Perubahan' +
+      '</button>' +
+    '</div>'
+  );
+}
+
+function statusOption(value, current) {
+  const selected = String(value) === String(current || "") ? "selected" : "";
+
+  return '<option value="' + escapeHtml(value) + '" ' + selected + '>' + escapeHtml(value) + '</option>';
+}
+
+function formatDatetimeLocal(value) {
+  if (!value) return "";
+
+  const text = String(value).trim();
+
+  if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(text)) {
+    return text.slice(0, 16);
+  }
+
+  return "";
+}
+
+async function saveJaksaUpdate(idPermohonan) {
+  const sessionToken = sessionStorage.getItem("jaksaSessionToken");
+
+  if (!sessionToken) {
+    alert("Sesi login tidak ditemukan. Silakan login ulang.");
+    openLogin();
+    return;
+  }
+
+  const status = document.getElementById("editStatus")?.value || "Menunggu";
+  const catatan = document.getElementById("editCatatan")?.value || "";
+  const jadwal = document.getElementById("editJadwal")?.value || "";
+  const btn = document.querySelector(".btn-save-update");
+
+  try {
+    if (btn) {
+      btn.disabled = true;
+      btn.textContent = "Menyimpan...";
+    }
+
+    const clientToken =
+      "UPDATE-" + Date.now() + "-" + Math.random().toString(36).slice(2);
+
+    await fetch(MONITORING_SCRIPT_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify({
+        action: "update_permohonan",
+        client_token: clientToken,
+        session_token: sessionToken,
+        id_permohonan: idPermohonan,
+        status: status,
+        catatan_jaksa: catatan,
+        jadwal_koordinasi: jadwal
+      })
+    });
+
+    const result = await waitMonitoringResult("update_result", clientToken);
+
+    if (result.status === "success") {
+      alert("Perubahan berhasil disimpan.");
+      closeDetailModal();
+      await loadMonitoringData();
+    } else {
+      alert(result.message || "Gagal menyimpan perubahan.");
+    }
+
+  } catch (error) {
+    console.error(error);
+    alert("Terjadi kesalahan saat menyimpan perubahan.");
+
+  } finally {
+    if (btn) {
+      btn.disabled = false;
+      btn.textContent = "Simpan Perubahan";
+    }
+  }
+}
+
+async function waitMonitoringResult(action, clientToken) {
+  for (let i = 0; i < 8; i++) {
+    await monitoringDelay(i === 0 ? 500 : 1000);
+
+    const url =
+      MONITORING_SCRIPT_URL +
+      "?action=" +
+      encodeURIComponent(action) +
+      "&client_token=" +
+      encodeURIComponent(clientToken);
+
+    const result = await monitoringJsonpRequest(url);
+
+    if (result.status === "success" || result.status === "error") {
+      return result;
+    }
+  }
+
+  return {
+    status: "pending",
+    message: "Data masih diproses."
+  };
+}
+
+function monitoringDelay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function escapeJs(value) {
+  return String(value === undefined || value === null ? "" : value)
+    .replace(/\\/g, "\\\\")
+    .replace(/'/g, "\\'")
+    .replace(/"/g, '\\"')
+    .replace(/\n/g, "\\n")
+    .replace(/\r/g, "");
+}
     function getStatusClass(status) {
       const value = String(status || "").toLowerCase();
 
