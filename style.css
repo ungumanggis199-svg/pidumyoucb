@@ -153,6 +153,7 @@ html { scroll-behavior: smooth; }
     background-position: center;
   }
 }
+
 /* ORB melayang dinamis */
 .orb {
   position: absolute;
@@ -186,6 +187,13 @@ html { scroll-behavior: smooth; }
   bottom: 15%; right: 20%;
   animation: floatOrb 10s ease-in-out infinite reverse;
 }
+#particles-js {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
 
 @keyframes floatOrb {
   0%   { transform: translate(0, 0)      scale(1);   }
