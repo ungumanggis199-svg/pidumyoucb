@@ -294,7 +294,7 @@ legend {
 textarea[name="kronologi"] {
   min-height: 180px;
   font-size: 1.1rem;
-  padding: 12px 35px;
+  padding: 12px 80px;
   border-radius: 8px;
   border: 1.5px solid var(--gold);
   resize: vertical;
