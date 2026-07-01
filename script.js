@@ -322,51 +322,102 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Form permohonan submit
-  const formPermohonan = document.getElementById("formPermohonan");
-  if (formPermohonan) {
-    formPermohonan.addEventListener("submit", async function (e) {
-      e.preventDefault();
+  // Form permohonan submit
+const formPermohonan = document.getElementById("formPermohonan");
 
-      const submitBtn = this.querySelector(".btn-submit");
-      submitBtn.disabled = true;
-      submitBtn.textContent = "Mengirim...";
+if (formPermohonan) {
+  formPermohonan.addEventListener("submit", async function (e) {
+    e.preventDefault();
 
-      try {
-        const formData = new FormData(this);
-        const data = {};
+    const submitBtn = this.querySelector(".btn-submit");
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Mengirim...";
 
-        // Ambil data form
-        ["nomor_lp", "nomor_spdp", "nama_tersangka", "pasal", "jaksa_peneliti",
-         "jenis_koordinasi", "urgensi", "kronologi", "cara_koordinasi", "nomor_hp"]
-          .forEach(key => { data[key] = formData.get(key) || ""; });
+    try {
+      const formData = new FormData(this);
+      const data = {};
 
-        data["permasalahan"] = formData.getAll("permasalahan[]").filter(v => v.trim() !== "").join(" | ");
-        data["sudah_dilakukan"] = formData.getAll("sudah_dilakukan[]").join(", ");
-        data["dimohon"] = formData.getAll("dimohon[]").join(", ");
-        data["dokumen"] = formData.getAll("dokumen[]").join(", ");
+      [
+        "nomor_lp",
+        "nomor_spdp",
+        "nama_tersangka",
+        "pasal",
+        "jaksa_peneliti",
+        "jenis_koordinasi",
+        "urgensi",
+        "kronologi",
+        "cara_koordinasi",
+        "nomor_hp"
+      ].forEach(key => {
+        data[key] = (formData.get(key) || "").trim();
+      });
 
-        // Validasi form
-        if (!validateForm(data)) {
-          submitBtn.disabled = false;
-          submitBtn.textContent = "Kirim Permohonan";
-          return;
-        }
+      data["permasalahan"] = formData
+        .getAll("permasalahan[]")
+        .map(v => v.trim())
+        .filter(v => v !== "")
+        .join(" | ");
 
-        // Generate ID permohonan dan timestamp
-        data["id_permohonan"] = "PK-" + new Date().getFullYear() + "-" + Date.now().toString().slice(-5);
-        data["timestamp"] = new Date().toLocaleString("id-ID");
-        data["status"] = "Menunggu";
-        data["catatan_jaksa"] = "";
+      data["sudah_dilakukan"] = formData.getAll("sudah_dilakukan[]").join(", ");
+      data["dimohon"] = formData.getAll("dimohon[]").join(", ");
+      data["dokumen"] = formData.getAll("dokumen[]").join(", ");
 
-        // Kirim ke Google Apps Script Web App
-        await fetch(GOOGLE_SCRIPT_URL, {
-  method: "POST",
-  mode: "no-cors",
-  headers: {
-    "Content-Type": "text/plain;charset=utf-8"
-  },
-  body: JSON.stringify(data)
-});
+      // Validasi semua bagian form
+      if (!validateForm(data)) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Kirim Permohonan";
+        return;
+      }
+
+      const fileInput = document.getElementById("fileUpload");
+
+      if (fileInput && fileInput.files.length > 0) {
+        data["file_upload"] = await fileToBase64(fileInput.files[0]);
+      }
+
+      data["id_permohonan"] = "PK-" + new Date().getFullYear() + "-" + Date.now().toString().slice(-5);
+      data["timestamp"] = new Date().toLocaleString("id-ID");
+      data["status"] = "Menunggu";
+      data["catatan_jaksa"] = "";
+
+      await fetch(GOOGLE_SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8"
+        },
+        body: JSON.stringify(data)
+      });
+
+      alert(
+        "Permohonan berhasil dikirim.\n\n" +
+        "ID Permohonan Anda: " + data["id_permohonan"] + "\n\n" +
+        "File pendukung telah dikirim ke Google Drive."
+      );
+
+      this.reset();
+
+      const wrap = document.getElementById("permasalahanWrap");
+
+      if (wrap) {
+        wrap.innerHTML =
+          '<div class="poin-row">' +
+          '<input type="text" name="permasalahan[]" placeholder="1. Tuliskan permasalahan...">' +
+          '<button type="button" class="btn-remove" onclick="removePoin(this)">&times;</button>' +
+          '</div>';
+      }
+
+      clearFormErrors();
+
+    } catch (err) {
+      console.error(err);
+      alert("Terjadi kesalahan saat mengirim. Silakan coba lagi.");
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Kirim Permohonan";
+    }
+  });
+}
         // Reset poin permasalahan ke satu baris
         const wrap = document.getElementById("permasalahanWrap");
         if (wrap) {
