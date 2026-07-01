@@ -50,12 +50,31 @@ html { scroll-behavior: smooth; }
 .burger span { width: 26px; height: 3px; background: var(--maroon); border-radius: 3px; }
 
 /* HERO */
+/* HERO dengan background gedung kejaksaan */
 .hero {
-  position: relative; min-height: 90vh;
-  display: flex; align-items: center; justify-content: center; text-align: center;
-  background: linear-gradient(135deg, #fff 0%, #fdf6ec 60%, #fbeaea 100%);
+  position: relative;
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   overflow: hidden;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.92) 0%, rgba(253,246,236,0.90) 55%, rgba(251,234,234,0.88) 100%),
+    url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1600&q=80')
+      center/cover no-repeat;
+  background-blend-mode: overlay;
 }
+
+/* Layer gedung dengan efek fade di bawah */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 40%, rgba(255,255,255,0.85) 100%);
+  z-index: 1;
+}
+
 .hero-content { z-index: 2; max-width: 720px; padding: 40px 20px; animation: fadeUp 1s ease; }
 .hero-logo {
   height: 120px;
