@@ -12,7 +12,16 @@ let isJaksaLoggedIn = sessionStorage.getItem("isJaksaLoggedIn") === "true";
 /* 1. Toggle menu burger (mobile) */
 function toggleMenu() {
   const nav = document.querySelector(".nav-links");
-  if (nav) nav.classList.toggle("open");
+  const burger = document.querySelector(".burger");
+
+  if (!nav) return;
+
+  nav.classList.toggle("open");
+
+  if (burger) {
+    const isOpen = nav.classList.contains("open");
+    burger.setAttribute("aria-expanded", isOpen ? "true" : "false");
+  }
 }
 
 /* 2. Modal login jaksa */
