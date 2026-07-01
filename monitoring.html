@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monitoring Permohonan - SIKORDA</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="nav-brand">
+      <img src="https://raw.githubusercontent.com/ungumanggis199-svg/MBG-Muna/main/Logo-Kejaksaan%20(1)(1).png" alt="Logo" class="logo">
+      <div class="brand-text"><h1>SIKORDA</h1><span>Sistem Koordinasi Penyidik &amp; Jaksa</span></div>
+    </div>
+    <nav class="nav-links">
+      <a href="index.html">Beranda</a>
+      <a href="permohonan.html">Permohonan Koordinasi</a>
+      <a href="monitoring.html" class="active">Monitoring</a>
+      <button class="btn-login" onclick="openLogin()">Login Jaksa</button>
+    </nav>
+    <div class="burger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+  </header>
+
+  <!-- MONITORING (SALIN SELURUH ISI <section id="monitoring"> ANDA KE SINI) -->
+  <section id="monitoring" class="section" style="padding-top: 40px;">
+    <div class="section-header">
+      <h2>Monitoring Permohonan</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="search-wrap">
+      <input type="text" id="searchBox" placeholder="Cari ID / Nama / Instansi..." onkeyup="filterTable()">
+    </div>
+    <div class="table-wrap">
+      <!-- ... salin seluruh <table id="monitorTable"> Anda di sini ... -->
+    </div>
+    <p class="note-blur">Data <strong>Nama Tersangka</strong> dan <strong>Detail Permohonan</strong> hanya dapat diakses setelah login sebagai Jaksa.</p>
+  </section>
+
+  <!-- MODAL LOGIN (WAJIB disertakan juga di sini) -->
+  <div id="loginModal" class="modal">
+    <div class="modal-box">
+      <span class="modal-close" onclick="closeLogin()">&times;</span>
+      <img src="https://raw.githubusercontent.com/ungumanggis199-svg/MBG-Muna/main/Logo-Kejaksaan%20(1)(1).png" alt="Logo" class="modal-logo">
+      <h3>Login Jaksa</h3>
+      <form id="loginForm">
+        <div class="input-group"><label>Username / NIP</label><input type="text" name="username" required></div>
+        <div class="input-group"><label>Password</label><input type="password" name="password" required></div>
+        <button type="submit" class="btn-submit">Masuk</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <img src="https://raw.githubusercontent.com/ungumanggis199-svg/MBG-Muna/main/Logo-Kejaksaan%20(1)(1).png" alt="Logo" class="footer-logo">
+    <p><strong>Kejaksaan Negeri Muna</strong></p>
+    <p>&copy; 2026 Kejaksaan Negeri Muna.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
