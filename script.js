@@ -6,6 +6,31 @@
 const GOOGLE_SCRIPT_URL = "GANTI_DENGAN_URL_APPS_SCRIPT_ANDA";
 let isJaksaLoggedIn = sessionStorage.getItem("isJaksaLoggedIn") === "true";
 
+function updateLoginButton() {
+  const btn = document.querySelector(".btn-login");
+  if (!btn) return;
+  if (isJaksaLoggedIn) {
+    btn.textContent = "Logout";
+    btn.onclick = logoutJaksa;
+  } else {
+    btn.textContent = "Login Jaksa";
+    btn.onclick = openLogin;
+  }
+}
+
+function logoutJaksa() {
+  sessionStorage.removeItem("isJaksaLoggedIn");
+  updateLoginButton();
+  alert("Anda telah logout.");
+}
+
+// Tambahkan di fungsi login
+if (username === DEMO_USER && password === DEMO_PASS) {
+  sessionStorage.setItem("isJaksaLoggedIn", "true");
+  alert("Login berhasil. Selamat datang, Jaksa.");
+  updateLoginButton();
+}
+
 function toggleMenu() {
   const nav = document.querySelector(".nav-links");
   if (nav) nav.classList.toggle("open");
@@ -78,7 +103,6 @@ function validateForm(data) {
 
   return isValid;
 }
-
 document.addEventListener("DOMContentLoaded", () => {
   updateLoginButton();
   console.log("SIKORDA - Kejaksaan Negeri Muna berhasil dimuat.");
