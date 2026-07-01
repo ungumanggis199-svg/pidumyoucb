@@ -373,3 +373,27 @@ body {
     animation: none !important;
   }
 }
+@media (max-width: 600px) {
+  .hero {
+    min-height: auto;
+    padding: 60px 20px;
+  }
+  .hero-logo {
+    height: 120px;
+    max-width: 120px;
+  }
+  .hero-content h2 {
+    font-size: 2rem;
+  }
+  .hero-content h3 {
+    font-size: 1.2rem;
+  }
+  .hero-content p {
+    font-size: 1rem;
+  }
+  .btn-primary, .btn-secondary {
+    padding: 12px 24px;
+    font-size: 0.9rem;
+  }
+}
+
