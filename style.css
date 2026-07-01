@@ -673,3 +673,40 @@ body {
     max-width: 220px;
   }
 }
+/* ===== FIX CENTER MODAL LOGIN INDEX ===== */
+#loginModal .modal-box {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  text-align: center !important;
+}
+
+#loginModal .modal-logo {
+  display: block !important;
+  width: 76px !important;
+  height: auto !important;
+  margin: 0 auto 14px auto !important;
+  object-fit: contain !important;
+}
+
+#loginModal .modal-box h3 {
+  width: 100% !important;
+  margin: 0 0 22px 0 !important;
+  color: var(--maroon) !important;
+  text-align: center !important;
+  font-size: 1.35rem !important;
+  font-weight: 700 !important;
+}
+
+#loginModal .modal-box form {
+  width: 100% !important;
+}
+
+#loginModal .modal-box .input-group {
+  width: 100% !important;
+  text-align: left !important;
+}
+
+#loginModal .modal-box .btn-submit {
+  width: 100% !important;
+}
