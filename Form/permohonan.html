@@ -40,6 +40,33 @@
 
     <form id="formPermohonan" class="form-box">
       <!-- A. Identitas Perkara -->
+      <div class="info-box">
+  <strong>Identitas Penyidik</strong>
+  <p>
+    Bagian ini diisi dengan identitas penyidik dan satuan kerja yang mengajukan permohonan koordinasi.
+    Data ini akan dipakai untuk membuat ID permohonan secara otomatis.
+  </p>
+</div>
+
+<div class="form-group">
+  <label for="nama_penyidik">Nama Penyidik</label>
+  <input 
+    type="text" 
+    id="nama_penyidik" 
+    name="nama_penyidik" 
+    placeholder="Contoh: Bripka Ahmad"
+  >
+</div>
+
+<div class="form-group">
+  <label for="nama_satuan">Nama Satuan</label>
+  <input 
+    type="text" 
+    id="nama_satuan" 
+    name="nama_satuan" 
+    placeholder="Contoh: Sat Reskrim Polres Muna"
+  >
+</div>
       <fieldset>
         <legend>A. Identitas Perkara</legend>
         <div class="grid-2">
@@ -61,7 +88,9 @@
           </div>
           <div class="input-group">
             <label>Jaksa Peneliti</label>
-            <input type="text" name="jaksa_peneliti" placeholder="Nama Jaksa Peneliti">
+            <select id="jaksa_peneliti" name="jaksa_peneliti">
+            <option value="">Memuat daftar jaksa...</option>
+            </select>
           </div>
         </div>
       </fieldset>
