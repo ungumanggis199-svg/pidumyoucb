@@ -52,6 +52,7 @@ html { scroll-behavior: smooth; }
 /* HERO */
 /* HERO dengan background gedung kejaksaan */
 /* HERO dengan background Gedung Kejaksaan Negeri Muna */
+/* HERO utama */
 .hero {
   position: relative;
   min-height: 90vh;
@@ -60,6 +61,13 @@ html { scroll-behavior: smooth; }
   justify-content: center;
   text-align: center;
   overflow: hidden;
+  background: linear-gradient(135deg, #fff 0%, #fdf6ec 55%, #fbeaea 100%);
+}
+
+/* Layer gambar gedung yang beranimasi zoom lembut */
+.hero-bg {
+  position: absolute;
+  inset: 0;
   background:
     linear-gradient(
       135deg,
@@ -69,37 +77,13 @@ html { scroll-behavior: smooth; }
     ),
     url('https://raw.githubusercontent.com/ungumanggis199-svg/pidumyoucb/main/Background%20Gedung%20kn%20Muna.png')
       center/cover no-repeat;
-  background-attachment: fixed;   /* efek parallax elegan saat scroll */
+  z-index: 0;
+  animation: slowZoom 20s ease-in-out infinite alternate;
 }
 
-/* Gradasi lembut agar transisi ke section bawah mulus */
-.hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(255,255,255,0.30) 0%,
-    rgba(255,255,255,0.00) 35%,
-    rgba(255,255,255,0.90) 100%
-  );
-  z-index: 1;
-}
-
-/* Garis emas dinamis di bawah hero */
-.hero::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0;
-  width: 100%; height: 6px;
-  background: linear-gradient(90deg, var(--maroon), var(--gold), var(--maroon));
-  background-size: 200% 100%;
-  z-index: 3;
-  animation: shimmer 5s linear infinite;
-}
-@keyframes shimmer {
-  0% { background-position: 0% 0; }
-  100% { background-position: 200% 0; }
+@keyframes slowZoom {
+  0%   { transform: scale(1);    }
+  100% { transform: scale(1.12); }
 }
 
 /* Pastikan konten hero di atas overlay */
