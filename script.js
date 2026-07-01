@@ -145,20 +145,6 @@ function validateForm(data) {
   return isValid;
 }
 
-  Object.keys(errors).forEach((key) => {
-    const input = document.querySelector(`[name="${key}"]`);
-    if (input) {
-      const errorEl = document.createElement("small");
-      errorEl.textContent = errors[key];
-      errorEl.style.color = "red";
-      errorEl.classList.add("error-msg");
-      input.parentElement.appendChild(errorEl);
-    }
-  });
-
-  return isValid;
-}
-
 /* 7. Tambah/hapus poin permasalahan */
 function addPoin() {
   const wrap = document.getElementById("permasalahanWrap");
@@ -323,6 +309,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Form permohonan submit
   // Form permohonan submit
+// Form permohonan submit
 const formPermohonan = document.getElementById("formPermohonan");
 
 if (formPermohonan) {
@@ -330,8 +317,6 @@ if (formPermohonan) {
     e.preventDefault();
 
     const submitBtn = this.querySelector(".btn-submit");
-    submitBtn.disabled = true;
-    submitBtn.textContent = "Mengirim...";
 
     try {
       const formData = new FormData(this);
@@ -362,11 +347,13 @@ if (formPermohonan) {
       data["dimohon"] = formData.getAll("dimohon[]").join(", ");
       data["dokumen"] = formData.getAll("dokumen[]").join(", ");
 
-      // Validasi semua bagian form
       if (!validateForm(data)) {
-        submitBtn.disabled = false;
-        submitBtn.textContent = "Kirim Permohonan";
         return;
+      }
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Mengirim...";
       }
 
       const fileInput = document.getElementById("fileUpload");
@@ -375,7 +362,9 @@ if (formPermohonan) {
         data["file_upload"] = await fileToBase64(fileInput.files[0]);
       }
 
-      data["id_permohonan"] = "PK-" + new Date().getFullYear() + "-" + Date.now().toString().slice(-5);
+      data["id_permohonan"] =
+        "PK-" + new Date().getFullYear() + "-" + Date.now().toString().slice(-5);
+
       data["timestamp"] = new Date().toLocaleString("id-ID");
       data["status"] = "Menunggu";
       data["catatan_jaksa"] = "";
@@ -398,7 +387,6 @@ if (formPermohonan) {
       this.reset();
 
       const wrap = document.getElementById("permasalahanWrap");
-
       if (wrap) {
         wrap.innerHTML =
           '<div class="poin-row">' +
@@ -413,30 +401,13 @@ if (formPermohonan) {
       console.error(err);
       alert("Terjadi kesalahan saat mengirim. Silakan coba lagi.");
     } finally {
-      submitBtn.disabled = false;
-      submitBtn.textContent = "Kirim Permohonan";
-    }
-  });
-}
-        // Reset poin permasalahan ke satu baris
-        const wrap = document.getElementById("permasalahanWrap");
-        if (wrap) {
-          wrap.innerHTML =
-            '<div class="poin-row">' +
-            '<input type="text" name="permasalahan[]" placeholder="1. Tuliskan permasalahan...">' +
-            '<button type="button" class="btn-remove" onclick="removePoin(this)">&times;</button>' +
-            '</div>';
-        }
-      } catch (err) {
-        console.error(err);
-        alert("Terjadi kesalahan saat mengirim. Silakan coba lagi.");
-      } finally {
+      if (submitBtn) {
         submitBtn.disabled = false;
         submitBtn.textContent = "Kirim Permohonan";
       }
-    });
-  }
-
+    }
+  });
+}
   // Particles.js inisialisasi (opsional)
   if (typeof particlesJS !== "undefined") {
     particlesJS("particles-js", {
