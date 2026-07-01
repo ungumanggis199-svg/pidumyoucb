@@ -30,7 +30,7 @@ body {
 .navbar {
   position: sticky;
   top: 0;
-  z-index: 1000;
+  z-index: 100;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -39,6 +39,7 @@ body {
   box-shadow: 0 2px 15px rgba(123, 17, 19, 0.12);
   backdrop-filter: blur(8px);
   width: 100%;
+  box-sizing: border-box;
 }
 
 .nav-brand {
@@ -49,8 +50,10 @@ body {
 
 .logo {
   height: 52px;
+  max-width: 100%;
   width: auto;
   object-fit: contain;
+  display: block;
 }
 
 .brand-text h1 {
@@ -291,5 +294,14 @@ body {
   .modal-box .btn-submit {
     font-size: 0.9rem;
     padding: 10px;
+  }
+}
+@media (max-width: 600px) {
+  .logo {
+    height: 40px;
+    max-width: 120px;
+  }
+  .navbar {
+    padding: 10px 15px;
   }
 }
