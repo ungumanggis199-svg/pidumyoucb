@@ -72,6 +72,7 @@ function lockJaksaData() {
   document.querySelectorAll(".blur-data").forEach(el => {
     el.classList.remove("unblurred");
     if (el.dataset.real) el.textContent = "Rahasia";
+     
   });
 }
 
@@ -79,6 +80,7 @@ function lockJaksaData() {
 function clearFormErrors() {
   document.querySelectorAll("small.error-msg").forEach(el => el.remove());
 }
+
 function validateForm(data) {
   clearFormErrors();
 
@@ -104,7 +106,8 @@ function validateForm(data) {
       target.appendChild(errorEl);
     }
   }
-
+   if (!data.nama_penyidik) addError("nama_penyidik", "Nama Penyidik wajib diisi.");
+   if (!data.nama_satuan) addError("nama_satuan", "Nama Satuan wajib diisi.");
   if (!data.nomor_lp) addError("nomor_lp", "Nomor Laporan Polisi wajib diisi.");
   if (!data.nomor_spdp) addError("nomor_spdp", "Nomor SPDP wajib diisi.");
   if (!data.nama_tersangka) addError("nama_tersangka", "Nama Tersangka wajib diisi.");
@@ -242,6 +245,7 @@ function goToMonitoring() {
 
 /* 12. Inisialisasi */
 document.addEventListener("DOMContentLoaded", () => {
+   loadJaksaList();
   updateLoginButton();
 
   // Tutup menu mobile saat link diklik
@@ -264,7 +268,34 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
+async function loadJaksaList() {
+  const select = document.getElementById("jaksa_peneliti");
+  if (!select) return;
 
+  try {
+    const response = await fetch(GOOGLE_SCRIPT_URL + "?action=list_jaksa");
+    const result = await response.json();
+
+    select.innerHTML = '<option value="">Pilih Jaksa Peneliti</option>';
+
+    if (result.status === "success" && Array.isArray(result.data)) {
+      result.data.forEach((nama) => {
+        const option = document.createElement("option");
+        option.value = nama;
+        option.textContent = nama;
+        select.appendChild(option);
+      });
+    }
+
+    if (!result.data || result.data.length === 0) {
+      select.innerHTML = '<option value="">Belum ada daftar jaksa</option>';
+    }
+
+  } catch (error) {
+    console.error(error);
+    select.innerHTML = '<option value="">Gagal memuat daftar jaksa</option>';
+  }
+}
   // Highlight menu aktif saat scroll
   window.addEventListener("scroll", () => {
     const sections = document.querySelectorAll("section[id]");
@@ -323,6 +354,8 @@ if (formPermohonan) {
       const data = {};
 
       [
+        "nama_penyidik",
+        "nama_satuan",
         "nomor_lp",
         "nomor_spdp",
         "nama_tersangka",
@@ -330,10 +363,10 @@ if (formPermohonan) {
         "jaksa_peneliti",
         "jenis_koordinasi",
         "urgensi",
-        "kronologi",
+          "kronologi",
         "cara_koordinasi",
         "nomor_hp"
-      ].forEach(key => {
+         ].forEach(key => {
         data[key] = (formData.get(key) || "").trim();
       });
 
@@ -361,9 +394,6 @@ if (formPermohonan) {
       if (fileInput && fileInput.files.length > 0) {
         data["file_upload"] = await fileToBase64(fileInput.files[0]);
       }
-
-      data["id_permohonan"] =
-        "PK-" + new Date().getFullYear() + "-" + Date.now().toString().slice(-5);
 
       data["timestamp"] = new Date().toLocaleString("id-ID");
       data["status"] = "Menunggu";
