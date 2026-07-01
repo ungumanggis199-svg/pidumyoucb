@@ -1,57 +1,722 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Monitoring Permohonan - SIKORDA</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="Form/form-style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    .monitoring-box {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 34px;
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid rgba(201, 162, 75, 0.25);
+      border-radius: 20px;
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.13);
+      backdrop-filter: blur(7px);
+    }
+
+    .monitoring-info {
+      padding: 16px 18px;
+      margin-bottom: 24px;
+      background: rgba(201, 162, 75, 0.13);
+      border-left: 5px solid #c9a24b;
+      border-radius: 13px;
+      color: #444;
+      line-height: 1.65;
+    }
+
+    .monitoring-info strong {
+      display: block;
+      margin-bottom: 6px;
+      color: #7b1113;
+    }
+
+    .monitoring-tools {
+      display: grid;
+      grid-template-columns: 1fr 260px;
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    .monitoring-tools input,
+    .monitoring-tools select {
+      width: 100%;
+      min-height: 52px;
+      padding: 13px 16px;
+      background: #fff;
+      border: 1.5px solid #c9a24b;
+      border-radius: 10px;
+      color: #333;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    .monitoring-tools input:focus,
+    .monitoring-tools select:focus {
+      border-color: #7b1113;
+      box-shadow: 0 0 0 3px rgba(123, 17, 19, 0.12);
+    }
+
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      border-radius: 14px;
+      border: 1px solid rgba(201, 162, 75, 0.45);
+      background: #fff;
+    }
+
+    .monitor-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 1050px;
+    }
+
+    .monitor-table th {
+      background: #7b1113;
+      color: #fff;
+      text-align: left;
+      padding: 14px 14px;
+      font-size: 0.9rem;
+      white-space: nowrap;
+    }
+
+    .monitor-table td {
+      padding: 14px 14px;
+      border-bottom: 1px solid rgba(201, 162, 75, 0.25);
+      color: #333;
+      font-size: 0.92rem;
+      vertical-align: middle;
+    }
+
+    .monitor-table tbody tr:hover {
+      background: rgba(201, 162, 75, 0.08);
+    }
+
+    .suspect-name {
+      display: inline-block;
+      font-weight: 700;
+      color: #5a0c0e;
+      transition: 0.25s ease;
+    }
+
+    .suspect-name.is-blurred {
+      filter: blur(5px);
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 7px 11px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.78rem;
+      white-space: nowrap;
+    }
+
+    .status-menunggu {
+      background: rgba(201, 162, 75, 0.18);
+      color: #7a5a00;
+    }
+
+    .status-diproses {
+      background: rgba(36, 116, 204, 0.16);
+      color: #174f92;
+    }
+
+    .status-selesai {
+      background: rgba(31, 143, 77, 0.16);
+      color: #126335;
+    }
+
+    .status-ditolak {
+      background: rgba(196, 45, 45, 0.15);
+      color: #9b1d1d;
+    }
+
+    .btn-detail {
+      border: none;
+      border-radius: 9px;
+      padding: 9px 13px;
+      background: linear-gradient(135deg, #7b1113, #5a0c0e);
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .btn-detail:hover {
+      transform: translateY(-1px);
+    }
+
+    .empty-state,
+    .loading-state {
+      padding: 28px 18px;
+      text-align: center;
+      color: #666;
+      font-weight: 600;
+    }
+
+    .access-warning {
+      display: none;
+      margin-bottom: 18px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      background: rgba(123, 17, 19, 0.09);
+      color: #7b1113;
+      border-left: 5px solid #7b1113;
+      font-weight: 600;
+    }
+
+    .access-warning.show {
+      display: block;
+    }
+
+    .detail-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 6000;
+      background: rgba(0, 0, 0, 0.55);
+      padding: 22px;
+      overflow-y: auto;
+    }
+
+    .detail-modal.show {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    .detail-card {
+      width: 100%;
+      max-width: 920px;
+      margin: 35px auto;
+      background: #fff;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.25);
+      position: relative;
+    }
+
+    .detail-close {
+      position: absolute;
+      top: 14px;
+      right: 16px;
+      width: 36px;
+      height: 36px;
+      border: none;
+      background: transparent;
+      color: #7b1113;
+      font-size: 2rem;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .detail-card h3 {
+      color: #7b1113;
+      font-size: 1.6rem;
+      margin-bottom: 6px;
+      padding-right: 42px;
+    }
+
+    .detail-subtitle {
+      color: #666;
+      margin-bottom: 24px;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 15px;
+    }
+
+    .detail-item {
+      padding: 14px 16px;
+      border-radius: 12px;
+      background: #f7f7f9;
+      border: 1px solid rgba(201, 162, 75, 0.28);
+    }
+
+    .detail-item.full {
+      grid-column: 1 / -1;
+    }
+
+    .detail-item span {
+      display: block;
+      color: #7b1113;
+      font-size: 0.82rem;
+      font-weight: 800;
+      margin-bottom: 7px;
+    }
+
+    .detail-item strong,
+    .detail-item p {
+      margin: 0;
+      color: #333;
+      font-size: 0.96rem;
+      line-height: 1.6;
+      word-break: break-word;
+    }
+
+    .file-link {
+      color: #7b1113;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .file-link:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 720px) {
+      .monitoring-box {
+        padding: 22px 16px;
+      }
+
+      .monitoring-tools {
+        grid-template-columns: 1fr;
+      }
+
+      .detail-card {
+        padding: 24px 18px;
+      }
+
+      .detail-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
+
 <body>
+  <div id="particles-js"></div>
+
   <!-- NAVBAR -->
   <header class="navbar">
     <div class="nav-brand">
-      <img src="https://raw.githubusercontent.com/ungumanggis199-svg/MBG-Muna/main/Logo-Kejaksaan%20(1)(1).png" alt="Logo" class="logo">
-      <div class="brand-text"><h1>SIKORDA</h1><span>Sistem Koordinasi Penyidik &amp; Jaksa</span></div>
+      <a href="index.html" aria-label="Beranda SIKORDA">
+        <img 
+          src="https://raw.githubusercontent.com/ungumanggis199-svg/MBG-Muna/main/Logo-Kejaksaan%20(1)(1).png" 
+          alt="Logo Kejaksaan Negeri Muna" 
+          class="logo" 
+        />
+      </a>
+
+      <div class="brand-text">
+        <h1>SIKORDA</h1>
+        <span>Sistem Koordinasi Penyidik &amp; Jaksa</span>
+      </div>
     </div>
-    <nav class="nav-links">
+
+    <nav class="nav-links" role="navigation" aria-label="Menu utama">
       <a href="index.html">Beranda</a>
       <a href="Form/permohonan.html">Permohonan Koordinasi</a>
-      <a href="monitoring.html" class="active">Monitoring</a>
-      <button class="btn-login" onclick="openLogin()">Login Jaksa</button>
+      <a href="monitoring.html" class="active" aria-current="page">Monitoring</a>
+      <button type="button" class="btn-login" onclick="openLogin()">Login Jaksa</button>
     </nav>
-    <div class="burger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+
+    <button type="button" class="burger" aria-label="Toggle menu" aria-expanded="false" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </header>
 
-  <!-- MONITORING (SALIN SELURUH ISI <section id="monitoring"> ANDA KE SINI) -->
-  <section id="monitoring" class="section" style="padding-top: 40px;">
-    <div class="section-header">
-      <h2>Monitoring Permohonan</h2>
+  <!-- MONITORING -->
+  <main class="section">
+    <div class="page-title-box">
+      <h2>Monitoring Permohonan Koordinasi</h2>
       <div class="divider"></div>
     </div>
-    <div class="search-wrap">
-      <input type="text" id="searchBox" placeholder="Cari ID / Nama / Instansi..." onkeyup="filterTable()">
-    </div>
-    <div class="table-wrap">
-      <!-- ... salin seluruh <table id="monitorTable"> Anda di sini ... -->
-    </div>
-    <p class="note-blur">Data <strong>Nama Tersangka</strong> dan <strong>Detail Permohonan</strong> hanya dapat diakses setelah login sebagai Jaksa.</p>
-  </section>
 
-  <!-- MODAL LOGIN (WAJIB disertakan juga di sini) -->
+    <div class="monitoring-box">
+      <div class="monitoring-info">
+        <strong>Informasi Monitoring</strong>
+        Data permohonan dapat dicari berdasarkan ID permohonan, nama penyidik, nama satuan, nomor LP, jenis koordinasi, status, dan nama tersangka. Nama tersangka tetap disamarkan pada tampilan umum. Detail permohonan hanya dapat dibuka setelah login sebagai Jaksa.
+      </div>
+
+      <div id="accessWarning" class="access-warning">
+        Detail permohonan hanya dapat dibuka setelah login sebagai Jaksa.
+      </div>
+
+      <div class="monitoring-tools">
+        <input 
+          type="search" 
+          id="searchBox" 
+          placeholder="Cari ID, penyidik, satuan, nomor LP, status, atau nama tersangka..."
+        />
+
+        <select id="statusFilter">
+          <option value="">Semua Status</option>
+          <option value="Menunggu">Menunggu</option>
+          <option value="Diproses">Diproses</option>
+          <option value="Selesai">Selesai</option>
+          <option value="Ditolak">Ditolak</option>
+        </select>
+      </div>
+
+      <div class="table-wrap">
+        <table class="monitor-table">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>ID Permohonan</th>
+              <th>Tanggal</th>
+              <th>Nama Penyidik</th>
+              <th>Nama Satuan</th>
+              <th>Nama Tersangka</th>
+              <th>Jenis Koordinasi</th>
+              <th>Urgensi</th>
+              <th>Status</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+
+          <tbody id="monitorBody">
+            <tr>
+              <td colspan="10" class="loading-state">Memuat data permohonan...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- DETAIL MODAL -->
+  <div id="detailModal" class="detail-modal">
+    <div class="detail-card">
+      <button type="button" class="detail-close" onclick="closeDetailModal()">&times;</button>
+      <h3>Detail Permohonan</h3>
+      <p class="detail-subtitle">Data lengkap permohonan koordinasi.</p>
+
+      <div id="detailContent" class="detail-grid"></div>
+    </div>
+  </div>
+
+  <!-- MODAL LOGIN -->
   <div id="loginModal" class="modal">
     <div class="modal-box">
-      <span class="modal-close" onclick="closeLogin()">&times;</span>
-      <img src="https://raw.githubusercontent.com/ungumanggis199-svg/MBG-Muna/main/Logo-Kejaksaan%20(1)(1).png" alt="Logo" class="modal-logo">
+      <button type="button" class="modal-close" onclick="closeLogin()">&times;</button>
+
+      <img 
+        src="https://raw.githubusercontent.com/ungumanggis199-svg/MBG-Muna/main/Logo-Kejaksaan%20(1)(1).png" 
+        alt="Logo Kejaksaan" 
+        class="modal-logo"
+      />
+
       <h3>Login Jaksa</h3>
+
       <form id="loginForm">
-        <div class="input-group"><label>Username / NIP</label><input type="text" name="username" required></div>
-        <div class="input-group"><label>Password</label><input type="password" name="password" required></div>
+        <div class="input-group">
+          <label for="username">Username / NIP</label>
+          <input type="text" id="username" name="username" required />
+        </div>
+
+        <div class="input-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required />
+        </div>
+
         <button type="submit" class="btn-submit">Masuk</button>
       </form>
     </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
   <script src="script.js"></script>
+
+  <script>
+    const MONITORING_SCRIPT_URL =
+      typeof GOOGLE_SCRIPT_URL !== "undefined"
+        ? GOOGLE_SCRIPT_URL
+        : "https://script.google.com/macros/s/AKfycbwZhzBasdie7UqEmTrLucc4NrwkHexypNxwW4To4yUYGOOov51vkqenUSGlsiMUZgIK/exec";
+
+    let monitoringData = [];
+    let filteredMonitoringData = [];
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const searchBox = document.getElementById("searchBox");
+      const statusFilter = document.getElementById("statusFilter");
+
+      if (searchBox) {
+        searchBox.addEventListener("input", renderMonitoringTable);
+      }
+
+      if (statusFilter) {
+        statusFilter.addEventListener("change", renderMonitoringTable);
+      }
+
+      loadMonitoringData();
+
+      setInterval(function () {
+        applyNamePrivacy();
+      }, 500);
+    });
+
+    async function loadMonitoringData() {
+      const body = document.getElementById("monitorBody");
+
+      try {
+        const url = MONITORING_SCRIPT_URL + "?action=list_permohonan";
+        const result = await monitoringJsonpRequest(url);
+
+        if (!result || result.status !== "success") {
+          throw new Error(result && result.message ? result.message : "Gagal memuat data.");
+        }
+
+        monitoringData = Array.isArray(result.data) ? result.data : [];
+        renderMonitoringTable();
+
+      } catch (error) {
+        console.error(error);
+
+        if (body) {
+          body.innerHTML =
+            '<tr>' +
+            '<td colspan="10" class="empty-state">Data belum dapat dimuat. Pastikan Apps Script sudah dideploy ulang.</td>' +
+            '</tr>';
+        }
+      }
+    }
+
+    function renderMonitoringTable() {
+      const body = document.getElementById("monitorBody");
+      const searchBox = document.getElementById("searchBox");
+      const statusFilter = document.getElementById("statusFilter");
+
+      if (!body) return;
+
+      const keyword = searchBox ? searchBox.value.trim().toLowerCase() : "";
+      const selectedStatus = statusFilter ? statusFilter.value.trim().toLowerCase() : "";
+
+      filteredMonitoringData = monitoringData.filter(function (item) {
+        const rowText = [
+          item.id_permohonan,
+          item.timestamp,
+          item.nama_penyidik,
+          item.nama_satuan,
+          item.nomor_lp,
+          item.nomor_spdp,
+          item.nama_tersangka,
+          item.pasal,
+          item.jaksa_peneliti,
+          item.jenis_koordinasi,
+          item.urgensi,
+          item.status
+        ].join(" ").toLowerCase();
+
+        const statusText = String(item.status || "").toLowerCase();
+
+        const matchKeyword = keyword === "" || rowText.includes(keyword);
+        const matchStatus = selectedStatus === "" || statusText === selectedStatus;
+
+        return matchKeyword && matchStatus;
+      });
+
+      if (filteredMonitoringData.length === 0) {
+        body.innerHTML =
+          '<tr>' +
+          '<td colspan="10" class="empty-state">Data tidak ditemukan.</td>' +
+          '</tr>';
+        return;
+      }
+
+      body.innerHTML = filteredMonitoringData.map(function (item, index) {
+        const statusClass = getStatusClass(item.status);
+
+        return (
+          '<tr>' +
+            '<td>' + (index + 1) + '</td>' +
+            '<td><strong>' + escapeHtml(item.id_permohonan || "-") + '</strong></td>' +
+            '<td>' + escapeHtml(item.timestamp || "-") + '</td>' +
+            '<td>' + escapeHtml(item.nama_penyidik || "-") + '</td>' +
+            '<td>' + escapeHtml(item.nama_satuan || "-") + '</td>' +
+            '<td>' +
+              '<span class="suspect-name" data-real="' + escapeHtml(item.nama_tersangka || "-") + '">' +
+                escapeHtml(item.nama_tersangka || "-") +
+              '</span>' +
+            '</td>' +
+            '<td>' + escapeHtml(item.jenis_koordinasi || "-") + '</td>' +
+            '<td>' + escapeHtml(item.urgensi || "-") + '</td>' +
+            '<td><span class="status-badge ' + statusClass + '">' + escapeHtml(item.status || "Menunggu") + '</span></td>' +
+            '<td><button type="button" class="btn-detail" onclick="openDetailPermohonan(' + index + ')">Lihat Detail</button></td>' +
+          '</tr>'
+        );
+      }).join("");
+
+      applyNamePrivacy();
+    }
+
+    function applyNamePrivacy() {
+      const isLoggedIn = sessionStorage.getItem("isJaksaLoggedIn") === "true";
+
+      document.querySelectorAll(".suspect-name").forEach(function (el) {
+        const realName = el.getAttribute("data-real") || "-";
+        el.textContent = realName;
+
+        if (isLoggedIn) {
+          el.classList.remove("is-blurred");
+        } else {
+          el.classList.add("is-blurred");
+        }
+      });
+    }
+
+    function openDetailPermohonan(index) {
+      const isLoggedIn = sessionStorage.getItem("isJaksaLoggedIn") === "true";
+      const warning = document.getElementById("accessWarning");
+
+      if (!isLoggedIn) {
+        if (warning) {
+          warning.classList.add("show");
+          warning.scrollIntoView({ behavior: "smooth", block: "center" });
+
+          setTimeout(function () {
+            warning.classList.remove("show");
+          }, 4500);
+        }
+
+        if (typeof openLogin === "function") {
+          openLogin();
+        }
+
+        return;
+      }
+
+      const item = filteredMonitoringData[index];
+
+      if (!item) return;
+
+      const detailContent = document.getElementById("detailContent");
+      const detailModal = document.getElementById("detailModal");
+
+      if (!detailContent || !detailModal) return;
+
+      detailContent.innerHTML =
+        detailItem("ID Permohonan", item.id_permohonan) +
+        detailItem("Timestamp", item.timestamp) +
+        detailItem("Nama Penyidik", item.nama_penyidik) +
+        detailItem("Nama Satuan", item.nama_satuan) +
+        detailItem("Nomor LP", item.nomor_lp) +
+        detailItem("Nomor SPDP", item.nomor_spdp) +
+        detailItem("Nama Tersangka", item.nama_tersangka) +
+        detailItem("Pasal", item.pasal) +
+        detailItem("Jaksa Peneliti", item.jaksa_peneliti) +
+        detailItem("Jenis Koordinasi", item.jenis_koordinasi) +
+        detailItem("Urgensi", item.urgensi) +
+        detailItem("Cara Koordinasi", item.cara_koordinasi) +
+        detailItem("Nomor HP", item.nomor_hp) +
+        detailItem("Status", item.status) +
+        detailItem("Permasalahan", item.permasalahan, true) +
+        detailItem("Kronologi", item.kronologi, true) +
+        detailItem("Sudah Dilakukan", item.sudah_dilakukan, true) +
+        detailItem("Dimohon", item.dimohon, true) +
+        detailItem("Dokumen", item.dokumen, true) +
+        detailFileItem("File Pendukung", item.file_url) +
+        detailItem("Catatan Jaksa", item.catatan_jaksa || "-", true) +
+        detailItem("Tanggal Update", item.tanggal_update || "-") +
+        detailItem("Ditangani Oleh", item.ditangani_oleh || "-") +
+        detailItem("Hasil Koordinasi", item.hasil_koordinasi || "-", true);
+
+      detailModal.classList.add("show");
+    }
+
+    function closeDetailModal() {
+      const detailModal = document.getElementById("detailModal");
+
+      if (detailModal) {
+        detailModal.classList.remove("show");
+      }
+    }
+
+    function detailItem(label, value, full) {
+      return (
+        '<div class="detail-item ' + (full ? "full" : "") + '">' +
+          '<span>' + escapeHtml(label) + '</span>' +
+          '<p>' + escapeHtml(value || "-") + '</p>' +
+        '</div>'
+      );
+    }
+
+    function detailFileItem(label, value) {
+      if (!value) {
+        return detailItem(label, "-", true);
+      }
+
+      return (
+        '<div class="detail-item full">' +
+          '<span>' + escapeHtml(label) + '</span>' +
+          '<p><a class="file-link" href="' + escapeHtml(value) + '" target="_blank">Buka File Pendukung</a></p>' +
+        '</div>'
+      );
+    }
+
+    function getStatusClass(status) {
+      const value = String(status || "").toLowerCase();
+
+      if (value.includes("selesai")) return "status-selesai";
+      if (value.includes("proses")) return "status-diproses";
+      if (value.includes("tolak")) return "status-ditolak";
+
+      return "status-menunggu";
+    }
+
+    function monitoringJsonpRequest(url, timeout) {
+      return new Promise(function (resolve, reject) {
+        const callbackName =
+          "monitoringCallback_" + Date.now() + "_" + Math.random().toString(36).slice(2);
+
+        const script = document.createElement("script");
+
+        const timer = setTimeout(function () {
+          cleanup();
+          reject(new Error("Timeout memuat data monitoring."));
+        }, timeout || 15000);
+
+        function cleanup() {
+          clearTimeout(timer);
+
+          if (script.parentNode) {
+            script.parentNode.removeChild(script);
+          }
+
+          delete window[callbackName];
+        }
+
+        window[callbackName] = function (data) {
+          cleanup();
+          resolve(data);
+        };
+
+        const separator = url.includes("?") ? "&" : "?";
+        script.src = url + separator + "callback=" + encodeURIComponent(callbackName);
+
+        script.onerror = function () {
+          cleanup();
+          reject(new Error("Gagal memuat data monitoring."));
+        };
+
+        document.body.appendChild(script);
+      });
+    }
+
+    function escapeHtml(value) {
+      return String(value === undefined || value === null ? "" : value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+  </script>
 </body>
 </html>
