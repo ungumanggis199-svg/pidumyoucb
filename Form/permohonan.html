@@ -329,5 +329,33 @@
 
   <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
   <script src="../script.js"></script>
+  <div id="successPage" class="success-page" hidden>
+  <div class="success-card">
+    <div class="success-icon">✓</div>
+
+    <h2>Permohonan Berhasil Dikirim</h2>
+
+    <p>
+      Data permohonan koordinasi telah berhasil tersimpan ke sistem.
+      File pendukung juga telah dikirim ke Google Drive.
+    </p>
+
+    <div class="success-detail">
+      <span>ID Permohonan</span>
+      <strong id="successIdPermohonan">-</strong>
+    </div>
+
+    <a id="successFileLink" href="#" target="_blank" class="success-link" hidden>
+      Lihat File Pendukung
+    </a>
+
+    <div class="success-actions">
+      <a href="../monitoring.html" class="btn-success-main">Buka Monitoring</a>
+      <button type="button" class="btn-success-secondary" onclick="window.location.reload()">
+        Ajukan Permohonan Baru
+      </button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
