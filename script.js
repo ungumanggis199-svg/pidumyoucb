@@ -165,7 +165,6 @@ if (
       errorEl.classList.add("error-msg");
       uploadBox.appendChild(errorEl);
     }
-  }
 
   if (!isValid) {
     alert("Form belum lengkap. Mohon isi semua bagian terlebih dahulu.");
