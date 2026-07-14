@@ -243,47 +243,75 @@
       </fieldset>
 
             <!-- H. Resume Perkara -->
-      <fieldset>
-        <legend>H. Resume Perkara</legend>
+<fieldset>
+  <legend>H. Resume Perkara</legend>
 
-        <div class="upload-box">
-          <label for="fileUpload">Upload File Resume Perkara (maksimal 50MB)</label>
-          <input 
-            type="file" 
-            id="fileUpload" 
-            name="fileUpload"
-            accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
-            onchange="checkFileSize(this)"
-          />
-          <small>Format: PDF, DOC, DOCX</small>
-        </div>
-      </fieldset>
+  <div class="upload-box">
+    <label for="fileResume">
+      Upload File Resume Perkara, maksimal 50 MB
+    </label>
+
+    <input
+      type="file"
+      id="fileResume"
+      name="file_resume"
+      data-max-mb="50"
+      accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+      onchange="checkFileSize(this)"
+    />
+
+    <small>Format: PDF, JPG, JPEG, PNG, DOC, DOCX</small>
+  </div>
+</fieldset>
 
       <!-- H. Dokumen Pendukung -->
       <fieldset>
-        <legend>I. Dokumen Pendukung</legend>
+  <legend>I. Dokumen Pendukung</legend>
 
-        <div class="checklist grid-3">
-          <label><input type="checkbox" name="dokumen[]" value="LP"> LP</label>
-          <label><input type="checkbox" name="dokumen[]" value="SPDP"> SPDP</label>
-          <label><input type="checkbox" name="dokumen[]" value="BAP"> BAP</label>
-          <label><input type="checkbox" name="dokumen[]" value="Foto Barang Bukti"> Foto Barang Bukti</label>
-          <label><input type="checkbox" name="dokumen[]" value="Dokumen lain"> Dokumen lain</label>
-        </div>
+  <div class="checklist grid-3">
+    <label>
+      <input type="checkbox" name="dokumen[]" value="LP">
+      LP
+    </label>
 
-        <div class="upload-box">
-          <label for="fileUpload">Upload File Pendukung (maksimal 10MB)</label>
-          <input 
-            type="file" 
-            id="fileUpload" 
-            name="fileUpload"
-            accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
-            onchange="checkFileSize(this)"
-          />
-          <small>Format: PDF, JPG, JPEG, PNG, DOC, DOCX</small>
-        </div>
-      </fieldset>
+    <label>
+      <input type="checkbox" name="dokumen[]" value="SPDP">
+      SPDP
+    </label>
 
+    <label>
+      <input type="checkbox" name="dokumen[]" value="BAP">
+      BAP
+    </label>
+
+    <label>
+      <input type="checkbox" name="dokumen[]" value="Foto Barang Bukti">
+      Foto Barang Bukti
+    </label>
+
+    <label>
+      <input type="checkbox" name="dokumen[]" value="Dokumen lain">
+      Dokumen lain
+    </label>
+  </div>
+
+  <div class="upload-box">
+    <label for="filePendukung">
+      Upload File Pendukung, maksimal 10 MB
+    </label>
+
+    <input
+      type="file"
+      id="filePendukung"
+      name="file_pendukung"
+      data-max-mb="10"
+      accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+      onchange="checkFileSize(this)"
+    />
+
+    <small>Format: PDF, JPG, JPEG, PNG, DOC, DOCX</small>
+  </div>
+</fieldset>
       <!-- I. Cara Koordinasi -->
       <fieldset>
         <legend>J. Cara Koordinasi yang Diinginkan</legend>
