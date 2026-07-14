@@ -911,7 +911,16 @@
         detailItem("Sudah Dilakukan", item.sudah_dilakukan, true) +
         detailItem("Dimohon", item.dimohon, true) +
         detailItem("Dokumen", item.dokumen, true) +
-        detailFileItem("File Pendukung", item.file_url) +
+        detailFileItem(
+  "Resume Perkara",
+  item.resume_url,
+  "Buka Resume Perkara"
+) +
+detailFileItem(
+  "File Pendukung",
+  item.file_pendukung_url || item.file_url,
+  "Buka File Pendukung"
+) +
         detailItem("Catatan Jaksa", item.catatan_jaksa || "-", true) +
         detailItem("Tanggal Update", item.tanggal_update || "-") +
         detailItem("Ditangani Oleh", item.ditangani_oleh || "-") +
@@ -938,18 +947,27 @@
       );
     }
 
-    function detailFileItem(label, value) {
-      if (!value) {
-        return detailItem(label, "-", true);
-      }
+    function detailFileItem(label, value, linkText) {
+  const fileUrl = String(value || "").trim();
 
-      return (
-        '<div class="detail-item full">' +
-          '<span>' + escapeHtml(label) + '</span>' +
-          '<p><a class="file-link" href="' + escapeHtml(value) + '" target="_blank">Buka File Pendukung</a></p>' +
-        '</div>'
-      );
-    }
+  if (!fileUrl) {
+    return detailItem(label, "-", true);
+  }
+
+  return (
+    '<div class="detail-item full">' +
+      '<span>' + escapeHtml(label) + '</span>' +
+      '<p>' +
+        '<a class="file-link" ' +
+          'href="' + escapeHtml(fileUrl) + '" ' +
+          'target="_blank" ' +
+          'rel="noopener noreferrer">' +
+          escapeHtml(linkText || "Buka File") +
+        '</a>' +
+      '</p>' +
+    '</div>'
+  );
+}
 
     function editJaksaBox(item) {
       return (
