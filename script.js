@@ -124,10 +124,36 @@ function validateForm(data) {
   if (!data.cara_koordinasi) addError("cara_koordinasi", "Cara koordinasi wajib dipilih.");
   if (!data.nomor_hp) addError("nomor_hp", "Nomor HP Penyidik wajib diisi.");
 
-  const fileInput = document.getElementById("fileUpload");
-  if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
-    isValid = false;
-    errorList.push("File pendukung wajib diupload.");
+const fileResumeInput = document.getElementById("fileResume");
+const filePendukungInput = document.getElementById("filePendukung");
+
+if (
+  !fileResumeInput ||
+  !fileResumeInput.files ||
+  fileResumeInput.files.length === 0
+) {
+  isValid = false;
+  errorList.push("File resume perkara wajib diupload.");
+
+  addFileError(
+    fileResumeInput,
+    "File resume perkara wajib diupload."
+  );
+}
+
+if (
+  !filePendukungInput ||
+  !filePendukungInput.files ||
+  filePendukungInput.files.length === 0
+) {
+  isValid = false;
+  errorList.push("File pendukung wajib diupload.");
+
+  addFileError(
+    filePendukungInput,
+    "File pendukung wajib diupload."
+  );
+}
 
     const uploadBox = document.querySelector(".upload-box");
     if (uploadBox) {
@@ -716,4 +742,27 @@ async function sikordaWaitResult(action, clientToken) {
     status: "pending",
     message: "Data masih diproses."
   };
+}
+function addFileError(input, message) {
+  if (!input) return;
+
+  const uploadBox = input.closest(".upload-box");
+
+  if (!uploadBox) return;
+
+  const oldError = uploadBox.querySelector(".error-msg");
+
+  if (oldError) {
+    oldError.remove();
+  }
+
+  const errorElement = document.createElement("small");
+
+  errorElement.textContent = message;
+  errorElement.className = "error-msg";
+  errorElement.style.color = "#ff6b6b";
+  errorElement.style.display = "block";
+  errorElement.style.marginTop = "8px";
+
+  uploadBox.appendChild(errorElement);
 }
