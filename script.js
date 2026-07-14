@@ -181,13 +181,24 @@ function renumberPoin() {
 
 /* 8. Validasi ukuran file upload (maks 10MB) */
 function checkFileSize(input) {
-  const maxSize = 50 * 1024 * 1024; // 50 MB
-  if (input.files.length > 0) {
-    if (input.files[0].size > maxSize) {
-      alert("Ukuran file melebihi 50MB. Silakan unggah file yang lebih kecil.");
-      input.value = "";
-    }
+  if (!input.files || input.files.length === 0) {
+    return true;
   }
+
+  const file = input.files[0];
+  const maxMb = Number(input.dataset.maxMb || 10);
+  const maxSize = maxMb * 1024 * 1024;
+
+  if (file.size > maxSize) {
+    alert(
+      `Ukuran file "${file.name}" melebihi batas ${maxMb} MB.`
+    );
+
+    input.value = "";
+    return false;
+  }
+
+  return true;
 }
 function fileToBase64(file) {
   return new Promise((resolve, reject) => {
