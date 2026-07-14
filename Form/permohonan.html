@@ -242,9 +242,26 @@
         </div>
       </fieldset>
 
+            <!-- H. Resume Perkara -->
+      <fieldset>
+        <legend>H. Resume Perkara</legend>
+
+        <div class="upload-box">
+          <label for="fileUpload">Upload File Resume Perkara (maksimal 10MB)</label>
+          <input 
+            type="file" 
+            id="fileUpload" 
+            name="fileUpload"
+            accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+            onchange="checkFileSize(this)"
+          />
+          <small>Format: PDF, DOC, DOCX</small>
+        </div>
+      </fieldset>
+
       <!-- H. Dokumen Pendukung -->
       <fieldset>
-        <legend>H. Dokumen Pendukung</legend>
+        <legend>I. Dokumen Pendukung</legend>
 
         <div class="checklist grid-3">
           <label><input type="checkbox" name="dokumen[]" value="LP"> LP</label>
@@ -270,7 +287,7 @@
 
       <!-- I. Cara Koordinasi -->
       <fieldset>
-        <legend>I. Cara Koordinasi yang Diinginkan</legend>
+        <legend>J. Cara Koordinasi yang Diinginkan</legend>
 
         <div class="checklist">
           <label><input type="radio" name="cara_koordinasi" value="Balasan melalui sistem"> Balasan melalui sistem</label>
@@ -282,7 +299,7 @@
 
       <!-- J. Nomor HP -->
       <fieldset>
-        <legend>J. Kontak Penyidik</legend>
+        <legend>K. Kontak Penyidik</legend>
 
         <div class="input-group">
           <label for="nomor_hp">Nomor HP Penyidik</label>
