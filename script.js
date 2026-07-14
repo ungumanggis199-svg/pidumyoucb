@@ -181,10 +181,10 @@ function renumberPoin() {
 
 /* 8. Validasi ukuran file upload (maks 10MB) */
 function checkFileSize(input) {
-  const maxSize = 10 * 1024 * 1024; // 10 MB
+  const maxSize = 50 * 1024 * 1024; // 50 MB
   if (input.files.length > 0) {
     if (input.files[0].size > maxSize) {
-      alert("Ukuran file melebihi 10MB. Silakan unggah file yang lebih kecil.");
+      alert("Ukuran file melebihi 50MB. Silakan unggah file yang lebih kecil.");
       input.value = "";
     }
   }
