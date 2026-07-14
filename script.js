@@ -407,33 +407,95 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
-async function loadJaksaList() {
+function loadJaksaList() {
   const select = document.getElementById("jaksa_peneliti");
-  if (!select) return;
 
-  try {
-    const response = await fetch(GOOGLE_SCRIPT_URL + "?action=list_jaksa");
-    const result = await response.json();
+  if (!select) {
+    return;
+  }
 
-    select.innerHTML = '<option value="">Pilih Jaksa Peneliti</option>';
+  select.innerHTML =
+    '<option value="">Memuat daftar Jaksa...</option>';
 
-    if (result.status === "success" && Array.isArray(result.data)) {
-      result.data.forEach((nama) => {
+  const callbackName =
+    "sikordaJaksaCallback_" +
+    Date.now() +
+    "_" +
+    Math.random().toString(36).slice(2);
+
+  const script = document.createElement("script");
+
+  function cleanup() {
+    if (script.parentNode) {
+      script.parentNode.removeChild(script);
+    }
+
+    try {
+      delete window[callbackName];
+    } catch (error) {
+      window[callbackName] = undefined;
+    }
+  }
+
+  window[callbackName] = function (result) {
+    select.innerHTML =
+      '<option value="">Pilih Jaksa Peneliti</option>';
+
+    if (
+      result &&
+      result.status === "success" &&
+      Array.isArray(result.data) &&
+      result.data.length > 0
+    ) {
+      result.data.forEach(function (nama) {
+        const namaJaksa = String(nama || "").trim();
+
+        if (!namaJaksa) {
+          return;
+        }
+
         const option = document.createElement("option");
-        option.value = nama;
-        option.textContent = nama;
+        option.value = namaJaksa;
+        option.textContent = namaJaksa;
+
         select.appendChild(option);
       });
+
+    } else {
+      const message =
+        result && result.message
+          ? result.message
+          : "Belum ada daftar Jaksa";
+
+      select.innerHTML =
+        '<option value="">' + message + "</option>";
+
+      console.error("Gagal memuat daftar Jaksa:", result);
     }
 
-    if (!result.data || result.data.length === 0) {
-      select.innerHTML = '<option value="">Belum ada daftar jaksa</option>';
-    }
+    cleanup();
+  };
 
-  } catch (error) {
-    console.error(error);
-    select.innerHTML = '<option value="">Gagal memuat daftar jaksa</option>';
-  }
+  script.onerror = function () {
+    select.innerHTML =
+      '<option value="">Gagal terhubung ke server</option>';
+
+    console.error(
+      "Tidak dapat mengambil daftar Jaksa dari Google Apps Script."
+    );
+
+    cleanup();
+  };
+
+  script.src =
+    GOOGLE_SCRIPT_URL +
+    "?action=list_jaksa" +
+    "&callback=" +
+    encodeURIComponent(callbackName) +
+    "&t=" +
+    Date.now();
+
+  document.body.appendChild(script);
 }
   // Highlight menu aktif saat scroll
   window.addEventListener("scroll", () => {
@@ -605,11 +667,28 @@ if (formPermohonan) {
       const clientToken = "SIKORDA-" + Date.now() + "-" + Math.random().toString(36).slice(2);
       data["client_token"] = clientToken;
 
-      const fileInput = document.getElementById("fileUpload");
+      const fileResumeInput = document.getElementById("fileResume");
+const filePendukungInput = document.getElementById("filePendukung");
 
-      if (fileInput && fileInput.files.length > 0) {
-        data["file_upload"] = await fileToBase64(fileInput.files[0]);
-      }
+if (
+  fileResumeInput &&
+  fileResumeInput.files &&
+  fileResumeInput.files.length > 0
+) {
+  data["file_resume"] = await fileToBase64(
+    fileResumeInput.files[0]
+  );
+}
+
+if (
+  filePendukungInput &&
+  filePendukungInput.files &&
+  filePendukungInput.files.length > 0
+) {
+  data["file_pendukung"] = await fileToBase64(
+    filePendukungInput.files[0]
+  );
+}
 
       data["timestamp"] = new Date().toLocaleString("id-ID");
       data["status"] = "Menunggu";
