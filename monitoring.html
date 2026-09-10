@@ -1021,6 +1021,20 @@ detailFileItem(
       '<!-- AKHIR TAMBAHAN -->' +
 
     '</div>'
+    '<div id="materi-koordinasi-container" style="display: none;">' +
+        '<div class="edit-field full">' +
+          '<label for="materi_koordinasi" style="color: #7b1113;">Materi Koordinasi <span style="color:red;">*</span></label>' +
+          '<textarea id="materi_koordinasi" placeholder="Masukkan materi koordinasi di sini untuk digenerate ke dalam dokumen..."></textarea>' +
+        '</div>' +
+        '<div style="display: flex; gap: 10px; margin-top: 10px;">' +
+          '<button type="button" id="btn-generate-sop" class="btn-save-update" onclick="generateSopForm6(\'' + escapeJs(item.id_permohonan) + '\')">' +
+            'Generate Dokumen SOP' +
+          '</button>' +
+          '<a id="btn-lihat-file-sop" href="#" target="_blank" class="btn-save-update" style="display: none; background: linear-gradient(135deg, #1f8f4d, #126335); text-decoration: none; text-align: center;">' +
+            'Lihat File' +
+          '</a>' +
+        '</div>' +
+      '</div>'
   );
 }
 
@@ -1158,11 +1172,16 @@ async function generateSopForm6(idPermohonan) {
     // Karena no-cors, kita gunakan teknik JSONP long-polling buatan Anda
     const result = await waitMonitoringResult("generate_sop_result", clientToken);
 
-    if (result.status === "success") {
+if (result.status === "success") {
       alert("Dokumen berhasil dibuat!");
-      // Membuka tab baru yang mengarah ke file dokumen di Google Drive
+      
+      // Menampilkan tombol "Lihat File" tanpa harus membuka tab otomatis
       if (result.file_url) {
-        window.open(result.file_url, '_blank');
+        const btnLihat = document.getElementById("btn-lihat-file-sop");
+        if (btnLihat) {
+          btnLihat.href = result.file_url;
+          btnLihat.style.display = "inline-block";
+        }
       }
     } else {
       alert(result.message || "Gagal membuat dokumen.");
