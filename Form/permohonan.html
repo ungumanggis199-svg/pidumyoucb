@@ -89,7 +89,19 @@
               placeholder="Contoh: Bripka Ahmad"
             />
           </div>
-
+          <!-- === TAMBAHAN DATA PENYIDIK === -->
+<div class="input-group">
+  <label>Pangkat Penyidik</label>
+  <input type="text" name="pangkat_penyidik" placeholder="Contoh: IPTU" />
+</div>
+<div class="input-group">
+  <label>NRP Penyidik</label>
+  <input type="text" name="nrp_penyidik" placeholder="Masukkan NRP Penyidik" />
+</div>
+<div class="input-group">
+  <label>Jabatan Penyidik</label>
+  <input type="text" name="jabatan_penyidik" placeholder="Contoh: Kanit Reskrim" />
+</div>
           <div class="input-group">
             <label for="nama_satuan">Nama Satuan</label>
             <input 
@@ -119,7 +131,18 @@
               placeholder="Masukkan Nomor SPDP"
             />
           </div>
-
+<div class="input-group">
+  <label>Tanggal SPDP</label>
+  <input type="date" name="tanggal_spdp" />
+</div>
+<div class="input-group">
+  <label>Nomor BAP</label>
+  <input type="text" name="nomor_bap" placeholder="Masukkan Nomor BAP" />
+</div>
+<div class="input-group">
+  <label>Tanggal BAP</label>
+  <input type="date" name="tanggal_bap" />
+</div>
           <div class="input-group">
             <label for="nama_tersangka">Nama Tersangka</label>
             <input 
@@ -129,7 +152,43 @@
               placeholder="Nama Tersangka"
             />
           </div>
-
+          <div class="input-group">
+  <label>Tempat Lahir Tersangka</label>
+  <input type="text" name="tempat_lahir_tersangka" />
+</div>
+<div class="input-group">
+  <label>Tanggal Lahir Tersangka</label>
+  <input type="date" name="tgl_lahir_tersangka" />
+</div>
+<div class="input-group">
+  <label>Jenis Kelamin Tersangka</label>
+  <select name="kelamin_tersangka">
+    <option value="">-- Pilih Jenis Kelamin --</option>
+    <option value="Laki-laki">Laki-laki</option>
+    <option value="Perempuan">Perempuan</option>
+  </select>
+</div>
+<div class="input-group">
+  <label>Agama Tersangka</label>
+  <input type="text" name="agama_tersangka" />
+</div>
+<div class="input-group">
+  <label>Pekerjaan Tersangka</label>
+  <input type="text" name="pekerjaan_tersangka" />
+</div>
+<div class="input-group">
+  <label>Alamat Tersangka</label>
+  <textarea name="alamat_tersangka" rows="3"></textarea>
+</div>
+<div class="input-group">
+  <label>Peran Tersangka</label>
+  <input type="text" name="peran_tersangka" placeholder="Contoh: Pelaku Utama / Turut Serta" />
+</div>
+<div class="input-group">
+  <label>Perbuatan Melawan Hukum</label>
+  <textarea name="perbuatan_melawan_hukum" rows="3" placeholder="Deskripsikan secara singkat"></textarea>
+</div>
+          
           <div class="input-group">
             <label for="pasal">Pasal yang Disangkakan</label>
             <input 
@@ -148,7 +207,19 @@
           </div>
         </div>
       </fieldset>
-
+<!-- === TAMBAHAN DATA JAKSA === -->
+<div class="input-group">
+  <label>Pangkat Jaksa Peneliti</label>
+  <input type="text" name="pangkat_jaksa" placeholder="Contoh: Jaksa Muda" />
+</div>
+<div class="input-group">
+  <label>NIP Jaksa Peneliti</label>
+  <input type="text" name="nip_jaksa" placeholder="Masukkan NIP Jaksa" />
+</div>
+<div class="input-group">
+  <label>Jabatan Jaksa Peneliti</label>
+  <input type="text" name="jabatan_jaksa" placeholder="Contoh: Jaksa Fungsional" />
+</div>
       <!-- B. Jenis Koordinasi -->
       <fieldset>
         <legend>B. Jenis Koordinasi (pilih salah satu)</legend>
