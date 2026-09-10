@@ -970,40 +970,59 @@ detailFileItem(
 }
 
     function editJaksaBox(item) {
-      return (
-        '<div class="edit-box">' +
-          '<h4 class="edit-box-title">Edit Tindak Lanjut Jaksa</h4>' +
+  return (
+    '<div class="edit-box">' +
+      '<h4 class="edit-box-title">Edit Tindak Lanjut Jaksa</h4>' +
 
-          '<div class="edit-grid">' +
-            '<div class="edit-field">' +
-              '<label for="editStatus">Status Permohonan</label>' +
-              '<select id="editStatus">' +
-                statusOption("Menunggu", item.status) +
-                statusOption("Diproses", item.status) +
-                statusOption("Selesai", item.status) +
-                statusOption("Ditolak", item.status) +
-              '</select>' +
-            '</div>' +
+      '<div class="edit-grid">' +
+        '<div class="edit-field">' +
+          '<label for="editStatus">Status Permohonan</label>' +
+          '<select id="editStatus">' +
+            statusOption("Menunggu", item.status) +
+            statusOption("Diproses", item.status) +
+            statusOption("Selesai", item.status) +
+            statusOption("Ditolak", item.status) +
+          '</select>' +
+        '</div>' +
 
-            '<div class="edit-field">' +
-              '<label for="editJadwal">Jadwal Koordinasi</label>' +
-              '<input type="datetime-local" id="editJadwal" value="' + escapeHtml(formatDatetimeLocal(item.jadwal_koordinasi)) + '">' +
-            '</div>' +
+        '<div class="edit-field">' +
+          '<label for="editJadwal">Jadwal Koordinasi</label>' +
+          '<input type="datetime-local" id="editJadwal" value="' + escapeHtml(formatDatetimeLocal(item.jadwal_koordinasi)) + '">' +
+        '</div>' +
 
-            '<div class="edit-field full">' +
-              '<label for="editCatatan">Catatan Jaksa</label>' +
-              '<textarea id="editCatatan" placeholder="Tulis catatan jaksa...">' + escapeHtml(item.catatan_jaksa || "") + '</textarea>' +
-            '</div>' +
+        '<div class="edit-field full">' +
+          '<label for="editCatatan">Catatan Jaksa</label>' +
+          '<textarea id="editCatatan" placeholder="Tulis catatan jaksa...">' + escapeHtml(item.catatan_jaksa || "") + '</textarea>' +
+        '</div>' +
+      '</div>' +
+
+      '<div class="edit-actions">' +
+        '<button type="button" class="btn-save-update" onclick="saveJaksaUpdate(\'' + escapeJs(item.id_permohonan) + '\')">' +
+          'Simpan Perubahan' +
+        '</button>' +
+      '</div>' +
+
+      '<!-- TAMBAHAN: FITUR GENERATE SOP FORM-6 -->' +
+      '<div style="margin-top: 20px; border-top: 1px solid rgba(201, 162, 75, 0.3); padding-top: 20px;">' +
+        '<button type="button" id="btn-toggle-sop" class="btn-save-update" style="background: linear-gradient(135deg, #c9a24b, #a58133); margin-bottom: 15px;" onclick="toggleSopBox()">' +
+          'Buat File SOP FORM-6' +
+        '</button>' +
+
+        '<div id="materi-koordinasi-container" style="display: none;">' +
+          '<div class="edit-field full">' +
+            '<label for="materi_koordinasi" style="color: #7b1113;">Materi Koordinasi <span style="color:red;">*</span></label>' +
+            '<textarea id="materi_koordinasi" placeholder="Masukkan materi koordinasi di sini untuk digenerate ke dalam dokumen..."></textarea>' +
           '</div>' +
+          '<button type="button" id="btn-generate-sop" class="btn-save-update" style="margin-top: 10px;" onclick="generateSopForm6(\'' + escapeJs(item.id_permohonan) + '\')">' +
+            'Generate Dokumen SOP' +
+          '</button>' +
+        '</div>' +
+      '</div>' +
+      '<!-- AKHIR TAMBAHAN -->' +
 
-          '<div class="edit-actions">' +
-            '<button type="button" class="btn-save-update" onclick="saveJaksaUpdate(\'' + escapeJs(item.id_permohonan) + '\')">' +
-              'Simpan Perubahan' +
-            '</button>' +
-          '</div>' +
-        '</div>'
-      );
-    }
+    '</div>'
+  );
+}
 
     function statusOption(value, current) {
       const selected = String(value) === String(current || "") ? "selected" : "";
@@ -1143,7 +1162,91 @@ detailFileItem(
     function monitoringDelay(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));
     }
+// --- FUNGSI TAMBAHAN UNTUK SOP FORM-6 ---
 
+// 1. Fungsi untuk memunculkan/menyembunyikan textarea materi koordinasi
+function toggleSopBox() {
+  const container = document.getElementById("materi-koordinasi-container");
+  if (container) {
+    if (container.style.display === "none") {
+      container.style.display = "block";
+    } else {
+      container.style.display = "none";
+    }
+  }
+}
+
+// 2. Fungsi untuk mengirim request pembuatan dokumen ke backend
+async function generateSopForm6(idPermohonan) {
+  const sessionToken = sessionStorage.getItem("jaksaSessionToken");
+  
+  // Validasi login
+  if (!sessionToken) {
+    alert("Sesi login tidak ditemukan. Silakan login ulang.");
+    openLogin();
+    return;
+  }
+
+  // Validasi isi box
+  const materi = document.getElementById("materi_koordinasi")?.value.trim();
+  if (!materi) {
+    alert("Materi Koordinasi wajib diisi untuk membuat file SOP FORM-6!");
+    document.getElementById("materi_koordinasi").focus();
+    return;
+  }
+
+  const btn = document.getElementById("btn-generate-sop");
+  
+  try {
+    if (btn) {
+      btn.disabled = true;
+      btn.textContent = "Memproses Dokumen...";
+    }
+
+    // Generate client token unik
+    const clientToken = "GENERATE-" + Date.now() + "-" + Math.random().toString(36).slice(2);
+
+    // Mengirim payload POST ke Google Apps Script (sama seperti saat update permohonan)
+    await fetch(MONITORING_SCRIPT_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify({
+        action: "generate_sop_form6", // Ini action baru yang ditangkap backend
+        client_token: clientToken,
+        session_token: sessionToken,
+        id_permohonan: idPermohonan,
+        materi_koordinasi: materi
+      })
+    });
+
+    // Karena no-cors, kita gunakan teknik JSONP long-polling buatan Anda
+    const result = await waitMonitoringResult("generate_sop_result", clientToken);
+
+    if (result.status === "success") {
+      alert("Dokumen berhasil dibuat!");
+      // Membuka tab baru yang mengarah ke file dokumen di Google Drive
+      if (result.file_url) {
+        window.open(result.file_url, '_blank');
+      }
+    } else {
+      alert(result.message || "Gagal membuat dokumen.");
+    }
+
+  } catch (error) {
+    console.error(error);
+    alert("Terjadi kesalahan saat menghubungi server untuk generate dokumen.");
+
+  } finally {
+    if (btn) {
+      btn.disabled = false;
+      btn.textContent = "Generate Dokumen SOP";
+    }
+  }
+}
+// ----------------------------------------
     function getStatusClass(status) {
       const value = String(status || "").toLowerCase();
 
