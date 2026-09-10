@@ -199,26 +199,24 @@
             />
           </div>
 
-          <div class="input-group full-width">
-            <label for="jaksa_peneliti">Jaksa Peneliti</label>
-            <select id="jaksa_peneliti" name="jaksa_peneliti">
-              <option value="">Memuat daftar jaksa...</option>
-            </select>
-          </div>
-        </div>
-      </fieldset>
+<div class="input-group">
+  <label for="jaksa_peneliti">Jaksa Peneliti</label>
+  <select id="jaksa_peneliti" name="jaksa_peneliti" required>
+    <option value="">-- Pilih Jaksa Peneliti --</option>
+  </select>
+</div>
 <!-- === TAMBAHAN DATA JAKSA === -->
 <div class="input-group">
   <label>Pangkat Jaksa Peneliti</label>
-  <input type="text" name="pangkat_jaksa" placeholder="Contoh: Jaksa Muda" />
+  <input type="text" id="pangkat_jaksa" name="pangkat_jaksa" readonly style="background-color: #f0f4f8;" />
 </div>
 <div class="input-group">
   <label>NIP Jaksa Peneliti</label>
-  <input type="text" name="nip_jaksa" placeholder="Masukkan NIP Jaksa" />
+  <input type="text" id="nip_jaksa" name="nip_jaksa" readonly style="background-color: #f0f4f8;" />
 </div>
 <div class="input-group">
   <label>Jabatan Jaksa Peneliti</label>
-  <input type="text" name="jabatan_jaksa" placeholder="Contoh: Jaksa Fungsional" />
+  <input type="text" id="jabatan_jaksa" name="jabatan_jaksa" readonly style="background-color: #f0f4f8;" />
 </div>
       <!-- B. Jenis Koordinasi -->
       <fieldset>
